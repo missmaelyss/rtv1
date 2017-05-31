@@ -22,6 +22,45 @@
 #define yRes 480
 #define xIndent  viewplaneWidth / (float)xRes
 #define yIndent  viewplaneHeight / (float)yRes
+double  scalaire(t_vct3d vec1, t_vct3d vec2)
+{
+    //printf("scalaire\n%f\n", vec1.x*vec2.x + vec1.y*vec2.y + vec1.z*vec2.z);
+    return (vec1.x*vec2.x + vec1.y*vec2.y + vec1.z*vec2.z);
+}
+
+t_vct3d operation_vct(t_vct3d vec1, char c, t_vct3d vec2)
+{
+    t_vct3d ret;
+    
+    if (c == '-')
+    {
+        ret.x = vec1.x - vec2.x;
+        ret.y = vec1.y - vec2.y;
+        ret.z = vec1.z - vec2.z;
+    }
+    if (c == '+')
+    {
+        ret.x = vec1.x + vec2.x;
+        ret.y = vec1.y + vec2.y;
+        ret.z = vec1.z + vec2.z;
+    }
+    //printf("operation\n%f  %c  %f = %f\n%f  %c  %f = %f\n%f  %c  %f = %f\n", vec1.x, c, vec2.x, ret.x, vec1.y, c, vec2.y, ret.y, vec1.z, c, vec2.z, ret.z);
+    return (ret);
+}
+
+t_vct3d operation2_vct(double tmp, char c, t_vct3d vec1)
+{
+    t_vct3d ret;
+    
+    if (c == '*')
+    {
+        ret.x = vec1.x * tmp;
+        ret.y = vec1.y * tmp;
+        ret.z = vec1.z * tmp;
+    }
+    //printf("operation2\n%f  %c  %f = %f\n%f  %c  %f = %f\n%f  %c  %f = %f\n", vec1.x, c, tmp, ret.x, vec1.y, c, tmp, ret.y, vec1.z, c, tmp, ret.z);
+    return (ret);
+}
 
 int		main(void)
 {
@@ -37,6 +76,7 @@ int		main(void)
     double b;
     double c;
     t_figure sphere;
+    t_figure cylindre;
     t_figure lumiere;
     double solution;
     t_vct3d point_solution;
@@ -44,6 +84,7 @@ int		main(void)
     t_vct3d vecteurLumierePoint;
     double  angleLumiere;
     double   norme;
+    t_vct3d deltaP;
     
     SDL_Window  *fenetre;
     SDL_Renderer *renderer;
@@ -79,7 +120,14 @@ int		main(void)
     lumiere.origin.x = 50;
     lumiere.origin.y = 400;
     lumiere.origin.z = 30;
-
+    cylindre.directeur.x = 0;
+    cylindre.directeur.y = 0;
+    cylindre.directeur.z = 1;
+    cylindre.base.x = 10;
+    cylindre.base.y = 900;
+    cylindre.base.z = 0;
+    cylindre.rayon = 20;
+    
     viewPlaneUpLeft.x = camPos.x + ((vecDir.x*viewplaneDist)+(upVec.x*(viewplaneHeight/2.0*f))) - (rightVec.x*(viewplaneWidth/2.0*f));
     viewPlaneUpLeft.y = camPos.y + ((vecDir.y*viewplaneDist)+(upVec.y*(viewplaneHeight/2.0*f))) - (rightVec.y*(viewplaneWidth/2.0*f));
     viewPlaneUpLeft.z = camPos.z + ((vecDir.z*viewplaneDist)+(upVec.z*(viewplaneHeight/2.0*f))) - (rightVec.z*(viewplaneWidth/2.0*f));
@@ -93,9 +141,14 @@ int		main(void)
             pixel.x = viewPlaneUpLeft.x + rightVec.x*xIndent*position.x - upVec.x*yIndent*position.y;
             pixel.y = viewPlaneUpLeft.y + rightVec.y*xIndent*position.x - upVec.y*yIndent*position.y;
             pixel.z = viewPlaneUpLeft.z + rightVec.z*xIndent*position.x - upVec.z*yIndent*position.y;
-            a = pow(pixel.x, 2) + pow(pixel.y, 2) + pow(pixel.z, 2);
-            b = 2 * (pixel.x*(camPos.x - sphere.origin.x) + pixel.y*(camPos.y - sphere.origin.y) + pixel.z*(camPos.z - sphere.origin.z));
-            c = (pow(camPos.x - sphere.origin.x, 2) + pow(camPos.y - sphere.origin.y, 2) + pow(camPos.z - sphere.origin.z, 2)) - pow(sphere.rayon, 2);
+            
+            deltaP = operation_vct(camPos, '-', cylindre.base);
+            a = scalaire(operation_vct(pixel, '-', operation2_vct(scalaire(pixel, cylindre.directeur), '*', cylindre.directeur)), operation_vct(pixel, '-', operation2_vct(scalaire(pixel, cylindre.directeur), '*', cylindre.directeur)));
+            
+            b = 2*(scalaire(operation_vct(pixel, '-', operation2_vct(scalaire(pixel, cylindre.directeur), '*', cylindre.directeur)), operation_vct(deltaP, '-', operation2_vct(scalaire(deltaP, cylindre.directeur), '*', cylindre.directeur))));
+    
+            c = scalaire(operation_vct(deltaP, '-', operation2_vct(scalaire(deltaP, cylindre.directeur), '*', cylindre.directeur)), operation_vct(deltaP, '-', operation2_vct(scalaire(deltaP, cylindre.directeur), '*', cylindre.directeur))) - pow(cylindre.rayon, 2);
+
             delta = pow(b, 2) - (4*a*c);
             if (delta >= 0)
             {
@@ -120,14 +173,14 @@ int		main(void)
                 angleLumiere = vecteurNormal.x*vecteurLumierePoint.x + vecteurNormal.y*vecteurLumierePoint.y + vecteurNormal.z*vecteurLumierePoint.z;
                 if (angleLumiere < 0)
                     angleLumiere  = 0;
-                SDL_FillRect(pix, NULL, SDL_MapRGB(ecran->format, 146 * angleLumiere, 20*angleLumiere ,  76 * angleLumiere ));
+                SDL_FillRect(pix, NULL, SDL_MapRGB(ecran->format, 146 , 20,  76));
                 SDL_BlitSurface(pix, NULL, ecran, &position);
             }
             (position.x)++;
         }
         (position.y)++;
     }
-     texture = SDL_CreateTextureFromSurface(renderer, ecran);
+    texture = SDL_CreateTextureFromSurface(renderer, ecran);
      SDL_RenderCopy(renderer, texture, NULL, NULL);
      SDL_RenderPresent(renderer);
      
@@ -143,6 +196,5 @@ int		main(void)
      SDL_DestroyRenderer(renderer);
      SDL_DestroyWindow(fenetre);
      SDL_Quit();
-     
      return 0;
 }
