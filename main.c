@@ -62,6 +62,25 @@ t_vct3d operation2_vct(double tmp, char c, t_vct3d vec1)
     return (ret);
 }
 
+t_vct3d rotation_matricielle(t_vct3d dir, t_vct3d angles)
+{
+    t_vct3d ret;
+    
+    //operation2_vct(M_PI/180, '*', angles);
+    ret.x = dir.x;
+    ret.y = cos(angles.x * (M_PI / 180))*dir.y - sin(angles.x * (M_PI / 180))*dir.z;
+    ret.z = sin(angles.x * (M_PI / 180))*dir.y + cos(angles.x * (M_PI / 180))*dir.z;
+    dir = ret;
+    ret.x = cos(angles.y * (M_PI / 180))*dir.x + sin(angles.y * (M_PI / 180) )*dir.z;
+    ret.y = dir.y;
+    ret.z = -sin(angles.y * (M_PI / 180))*dir.x + cos(angles.y* (M_PI / 180))*dir.z;
+    dir = ret;
+    ret.x = cos(angles.z * (M_PI / 180))*dir.x - sin(angles.z * (M_PI / 180))*dir.y;
+    ret.y = sin(angles.z * (M_PI / 180))*dir.x + cos(angles.z * (M_PI / 180))*dir.y;
+    ret.z = dir.z;
+    return (ret);
+}
+
 int		main(void)
 {
     t_vct3d camPos;
@@ -85,6 +104,7 @@ int		main(void)
     double  angleLumiere;
     double   norme;
     t_vct3d deltaP;
+    t_vct3d angles;
     
     SDL_Window  *fenetre;
     SDL_Renderer *renderer;
@@ -101,10 +121,10 @@ int		main(void)
     pix = SDL_CreateRGBSurface(0, 1, 1, 32, 0, 0, 0, 0);
     ecran = SDL_CreateRGBSurface(0, screenWidth, screenHeight, 32, 0, 0, 0, 0);
 
-    camPos.x = 0.2;
+    camPos.x = 0;
     camPos.y = 0;
     camPos.z = 0;
-    vecDir.x = -0.1;
+    vecDir.x = 0;
     vecDir.y = 1;
     vecDir.z = 0;
     upVec.x = 0;
@@ -117,43 +137,49 @@ int		main(void)
     sphere.origin.y = 500;
     sphere.origin.z = 0;
     sphere.rayon = 50;
-    lumiere.origin.x = 50;
-    lumiere.origin.y = 400;
+    lumiere.origin.x = 300;
+    lumiere.origin.y = 800;
     lumiere.origin.z = 30;
     cylindre.directeur.x = 0;
     cylindre.directeur.y = 0;
     cylindre.directeur.z = 1;
-    cylindre.base.x = 10;
-    cylindre.base.y = 900;
+    cylindre.base.x = 50;
+    cylindre.base.y = 800;
     cylindre.base.z = 0;
-    cylindre.rayon = 20;
-    
+    cylindre.rayon = 30;
+    angles.x = 90;
+    angles.y = 0;
+    angles.z = 0;
     viewPlaneUpLeft.x = camPos.x + ((vecDir.x*viewplaneDist)+(upVec.x*(viewplaneHeight/2.0*f))) - (rightVec.x*(viewplaneWidth/2.0*f));
     viewPlaneUpLeft.y = camPos.y + ((vecDir.y*viewplaneDist)+(upVec.y*(viewplaneHeight/2.0*f))) - (rightVec.y*(viewplaneWidth/2.0*f));
     viewPlaneUpLeft.z = camPos.z + ((vecDir.z*viewplaneDist)+(upVec.z*(viewplaneHeight/2.0*f))) - (rightVec.z*(viewplaneWidth/2.0*f));
-    
     position.y = 0;
+
+
     while (position.y < screenHeight)
     {
         position.x = 0;
         while (position.x < screenWidth)
         {
+
             pixel.x = viewPlaneUpLeft.x + rightVec.x*xIndent*position.x - upVec.x*yIndent*position.y;
             pixel.y = viewPlaneUpLeft.y + rightVec.y*xIndent*position.x - upVec.y*yIndent*position.y;
             pixel.z = viewPlaneUpLeft.z + rightVec.z*xIndent*position.x - upVec.z*yIndent*position.y;
-            
+            //pixel = rotation_matricielle(pixel, angles);
+            //camPos = rotation_matricielle(camPos, angles);
+
             deltaP = operation_vct(camPos, '-', cylindre.base);
             a = scalaire(operation_vct(pixel, '-', operation2_vct(scalaire(pixel, cylindre.directeur), '*', cylindre.directeur)), operation_vct(pixel, '-', operation2_vct(scalaire(pixel, cylindre.directeur), '*', cylindre.directeur)));
             
             b = 2*(scalaire(operation_vct(pixel, '-', operation2_vct(scalaire(pixel, cylindre.directeur), '*', cylindre.directeur)), operation_vct(deltaP, '-', operation2_vct(scalaire(deltaP, cylindre.directeur), '*', cylindre.directeur))));
-    
+            
             c = scalaire(operation_vct(deltaP, '-', operation2_vct(scalaire(deltaP, cylindre.directeur), '*', cylindre.directeur)), operation_vct(deltaP, '-', operation2_vct(scalaire(deltaP, cylindre.directeur), '*', cylindre.directeur))) - pow(cylindre.rayon, 2);
-
+            
             delta = pow(b, 2) - (4*a*c);
             if (delta >= 0)
             {
                 solution = (-b + sqrt(delta))/(2*a) > (-b - sqrt(delta))/(2*a) ? (-b - sqrt(delta))/(2*a) : (-b + sqrt(delta))/(2*a);
-                point_solution.x = camPos.x + pixel.x * solution;
+                /*point_solution.x = camPos.x + pixel.x * solution;
                 point_solution.y = camPos.y + pixel.y * solution;
                 point_solution.z = camPos.z + pixel.z * solution;
                 vecteurNormal.x = point_solution.x - sphere.origin.x;
@@ -172,18 +198,24 @@ int		main(void)
                 vecteurLumierePoint.z /= norme;
                 angleLumiere = vecteurNormal.x*vecteurLumierePoint.x + vecteurNormal.y*vecteurLumierePoint.y + vecteurNormal.z*vecteurLumierePoint.z;
                 if (angleLumiere < 0)
-                    angleLumiere  = 0;
-                SDL_FillRect(pix, NULL, SDL_MapRGB(ecran->format, 146 , 20,  76));
-                SDL_BlitSurface(pix, NULL, ecran, &position);
+                    angleLumiere  = 0;*/
+                //if (solution < 500)
+                //{
+                    SDL_FillRect(pix, NULL, SDL_MapRGB(ecran->format, 146 , 20,  76));
+                    SDL_BlitSurface(pix, NULL, ecran, &position);
+                    
+                //}
             }
             (position.x)++;
         }
         (position.y)++;
     }
     texture = SDL_CreateTextureFromSurface(renderer, ecran);
-     SDL_RenderCopy(renderer, texture, NULL, NULL);
-     SDL_RenderPresent(renderer);
-     
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
+    SDL_RenderPresent(renderer);
+    SDL_DestroyTexture(texture);
+    SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, 0 , 0, 0));
+
      while(!terminer)
      {
          SDL_WaitEvent(&evenements);
