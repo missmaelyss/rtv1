@@ -1,0 +1,21 @@
+<camera>
+	<position x = "0" y = "0" z = "0" />
+	<direction x = "1" y = "10005" z = "0" />
+</camera>
+
+<objects>
+	<sphere>
+		<radius = "50" />
+		<color red = "34" green = "180" blue = "216" />
+		<position x = "0" y = "500" z = "0" />
+	</sphere>
+	<cylinder>
+		<position x = "10" y = "900" z = "0" />
+		<direction x = "0" y = "0" z = "1" />
+		<color red = "255" green = "0" blue = "150" />
+	</cylinder>
+</objects>
+
+<light>
+	<position x = "0" y = "0" z = "0" />
+</light>
