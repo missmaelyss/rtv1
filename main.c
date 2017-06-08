@@ -141,9 +141,9 @@ int		main(void)
     sphere.origin.y = 500;
     sphere.origin.z = 0;
     sphere.rayon = 50;
-    lumiere.origin.x = 300;
-    lumiere.origin.y = 800;
-    lumiere.origin.z = 30;
+    lumiere.origin.x = 0;
+    lumiere.origin.y = 0;
+    lumiere.origin.z = 0;
     cylindre.directeur.x = 0;
     cylindre.directeur.y = 0;
     cylindre.directeur.z = 1;
@@ -198,31 +198,36 @@ int		main(void)
                 pixel.x /= norme;
                 pixel.y /= norme;
                 pixel.z /= norme;
-                //printf("x %f, y %f, z %f\n", pixel.x, pixel.y , pixel.z);
-                angleLumiere = pixel.y + pixel.x + pixel.z;
-                /*point_solution.x = camPos.x + pixel.x * solution;
+                point_solution.x = camPos.x + pixel.x * solution;
                 point_solution.y = camPos.y + pixel.y * solution;
                 point_solution.z = camPos.z + pixel.z * solution;
-                vecteurNormal.x = point_solution.x - sphere.origin.x;
-                vecteurNormal.y = point_solution.y - sphere.origin.y;
-                vecteurNormal.z = point_solution.z - sphere.origin.z;
+                vecteurNormal.x = point_solution.x - cylindre.origin.x;
+                vecteurNormal.y = point_solution.y - cylindre.origin.y;
+                vecteurNormal.z = 0;
                 norme = sqrt(pow(vecteurNormal.x,2) + pow(vecteurNormal.y,2) + pow(vecteurNormal.z,2));
                 vecteurNormal.x /= norme;
                 vecteurNormal.y /= norme;
                 vecteurNormal.z /= norme;
+                tmp = lumiere.origin;
+                dist = cylindre.base.y - lumiere.origin.y;
+                // camPos.x += sin(angles.z * M_PI/180) * dist;
+                lumiere.origin.y += (1 - cos(angles.x * M_PI/180)) * dist;
+                lumiere.origin.z += sin(angles.x * M_PI/180) * dist;
                 vecteurLumierePoint.x = lumiere.origin.x - point_solution.x;
                 vecteurLumierePoint.y = lumiere.origin.y - point_solution.y;
                 vecteurLumierePoint.z = lumiere.origin.z - point_solution.z;
+                lumiere.origin = tmp;
                 norme = sqrt(pow(vecteurLumierePoint.x,2) + pow(vecteurLumierePoint.y,2) + pow(vecteurLumierePoint.z,2));
                 vecteurLumierePoint.x /= norme;
                 vecteurLumierePoint.y /= norme;
                 vecteurLumierePoint.z /= norme;
                 angleLumiere = vecteurNormal.x*vecteurLumierePoint.x + vecteurNormal.y*vecteurLumierePoint.y + vecteurNormal.z*vecteurLumierePoint.z;
                 if (angleLumiere < 0)
-                    angleLumiere  = 0;*/
-                if (solution >= 0)
+                    angleLumiere  = 0;
+               if (solution >= 0)
                 {
-                    SDL_FillRect(pix, NULL, SDL_MapRGB(ecran->format, 146 , 20,  76));
+                    SDL_FillRect(pix, NULL, SDL_MapRGB(ecran->format, 146 * angleLumiere , 20* angleLumiere,  76* angleLumiere));
+                    //SDL_FillRect(pix, NULL, SDL_MapRGB(ecran->format, 146  , 20,  76));
                     SDL_BlitSurface(pix, NULL, ecran, &position);
                     
                 }
