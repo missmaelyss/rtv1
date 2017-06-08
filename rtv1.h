@@ -6,14 +6,14 @@
 /*   By: marnaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 18:55:16 by marnaud           #+#    #+#             */
-/*   Updated: 2017/05/16 20:24:03 by marnaud          ###   ########.fr       */
+/*   Updated: 2017/06/02 12:40:09 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_H
 # define RT_H
 
-# include <SDL2/SDL.h>
+# include <SDL.h>
 # include <math.h>
 # include <fcntl.h>
 # include <unistd.h>
@@ -41,9 +41,9 @@ typedef struct s_vct3d
 typedef struct s_figure
 {
     int    name;
-    t_vct3i origin;
-    t_vct3i	vct_normal;
-    t_vct3i vct_directeur;
+    t_vct3d origin;
+    t_vct3d	base;
+    t_vct3d directeur;
     int		rayon;
 }               t_figure;
 
