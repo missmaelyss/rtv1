@@ -6,7 +6,7 @@
 /*   By: marnaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/30 14:40:53 by marnaud           #+#    #+#             */
-/*   Updated: 2017/06/13 16:09:19 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/13 16:46:04 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,9 @@ int		main(void)
 	sphere.origin.y = 500;
 	sphere.origin.z = 0;
 	sphere.rayon = 50;
-	lumiere.origin.x = 300;
-	lumiere.origin.y = 800;
-	lumiere.origin.z = 30;
+	lumiere.origin.x = 40;
+	lumiere.origin.y = 400;
+	lumiere.origin.z = 200;
 	cylindre.directeur.x = 0;
 	cylindre.directeur.y = 0;
 	cylindre.directeur.z = 1;
@@ -156,15 +156,15 @@ int		main(void)
 	cylindre.base.y = 800;
 	cylindre.base.z = 0;
 	cylindre.rayon = 30;
-	cone.origin.x = 0;
+	cone.origin.x = -50;
 	cone.origin.y = 500;
 	cone.origin.z = 0;
 	cone.directeur.x = 0;
 	cone.directeur.y = 0;
 	cone.directeur.z = 1;
 	angle_cone = 45;
-	angles.x = 45;
-	angles.y = 45;
+	angles.x = 0;
+	angles.y = 0;
 	angles.z = 0;
 	viewPlaneUpLeft.x = camPos.x + ((vecDir.x*viewplaneDist)+(upVec.x*(viewplaneHeight/2.0*f))) - (rightVec.x*(viewplaneWidth/2.0*f));
 	viewPlaneUpLeft.y = camPos.y + ((vecDir.y*viewplaneDist)+(upVec.y*(viewplaneHeight/2.0*f))) - (rightVec.y*(viewplaneWidth/2.0*f));
@@ -200,32 +200,31 @@ int		main(void)
 			if (delta >= 0)
 			{
 				solution = (-b + sqrt(delta))/(2*a) > (-b - sqrt(delta))/(2*a) ? (-b - sqrt(delta))/(2*a) : (-b + sqrt(delta))/(2*a);
-				/*point_solution.x = camPos.x + pixel.x * solution;
-				  point_solution.y = camPos.y + pixel.y * solution;
-				  point_solution.z = camPos.z + pixel.z * solution;
-				  vecteurNormal.x = point_solution.x - sphere.origin.x;
-				  vecteurNormal.y = point_solution.y - sphere.origin.y;
-				  vecteurNormal.z = point_solution.z - sphere.origin.z;
-				  norme = sqrt(pow(vecteurNormal.x,2) + pow(vecteurNormal.y,2) + pow(vecteurNormal.z,2));
-				  vecteurNormal.x /= norme;
-				  vecteurNormal.y /= norme;
-				  vecteurNormal.z /= norme;
-				  vecteurLumierePoint.x = lumiere.origin.x - point_solution.x;
-				  vecteurLumierePoint.y = lumiere.origin.y - point_solution.y;
-				  vecteurLumierePoint.z = lumiere.origin.z - point_solution.z;
-				  norme = sqrt(pow(vecteurLumierePoint.x,2) + pow(vecteurLumierePoint.y,2) + pow(vecteurLumierePoint.z,2));
-				  vecteurLumierePoint.x /= norme;
-				  vecteurLumierePoint.y /= norme;
-				  vecteurLumierePoint.z /= norme;
-				  angleLumiere = vecteurNormal.x*vecteurLumierePoint.x + vecteurNormal.y*vecteurLumierePoint.y + vecteurNormal.z*vecteurLumierePoint.z;
-				  if (angleLumiere < 0)
-				  angleLumiere  = 0;*/
-				//if (solution < 500)
-				//{
-				SDL_FillRect(pix, NULL, SDL_MapRGB(ecran->format, 0 , 110,  180));
-				SDL_BlitSurface(pix, NULL, ecran, &position);
-
-				//}
+				point_solution.x = camPos.x + pixel.x * solution;
+				point_solution.y = camPos.y + pixel.y * solution;
+				point_solution.z = camPos.z + pixel.z * solution;
+				vecteurNormal.x = 2 * point_solution.x;
+				vecteurNormal.y = -2 * point_solution.y;
+				vecteurNormal.z = 2 * point_solution.z;
+				norme = sqrt(pow(vecteurNormal.x,2) + pow(vecteurNormal.y,2) + pow(vecteurNormal.z,2));
+				vecteurNormal.x /= norme;
+				vecteurNormal.y /= norme;
+				vecteurNormal.z /= norme;
+				vecteurLumierePoint.x = lumiere.origin.x - point_solution.x;
+				vecteurLumierePoint.y = lumiere.origin.y - point_solution.y;
+				vecteurLumierePoint.z = lumiere.origin.z - point_solution.z;
+				norme = sqrt(pow(vecteurLumierePoint.x,2) + pow(vecteurLumierePoint.y,2) + pow(vecteurLumierePoint.z,2));
+				vecteurLumierePoint.x /= norme;
+				vecteurLumierePoint.y /= norme;
+				vecteurLumierePoint.z /= norme;
+				angleLumiere = vecteurNormal.x*vecteurLumierePoint.x + vecteurNormal.y*vecteurLumierePoint.y + vecteurNormal.z*vecteurLumierePoint.z;
+				if (angleLumiere < 0)
+					angleLumiere  = 0;
+				if (solution > 0)
+				{
+					SDL_FillRect(pix, NULL, SDL_MapRGB(ecran->format, 0*angleLumiere , 110*angleLumiere,  180*angleLumiere));
+					SDL_BlitSurface(pix, NULL, ecran, &position);
+				}
 			}
 			(position.x)++;
 		}
