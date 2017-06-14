@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 11:37:03 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/14 17:51:30 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/14 17:56:19 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	ft_browse_pixels(t_env *env)
 {
-	Uint32		color;
-
 	ft_init_start(env);
 	env->sdl.pos.y = 0;
 	SDL_LockTexture(env->sdl.draw, NULL, &env->sdl.tmp, &env->sdl.pitch);
@@ -29,11 +27,10 @@ void	ft_browse_pixels(t_env *env)
 			ft_browse_list(env);
 			if (env->calc.solution >= 0)
 			{
-				color = SDL_MapRGBA(env->sdl.format, \
-					env->tmp.current->color.red, env->tmp.current->color.green,\
-				   	env->tmp.current->color.blue, 255);
 				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
-																	color;
+				SDL_MapRGBA(env->sdl.format, env->tmp.current->color.red, \
+				env->tmp.current->color.green, env->tmp.current->color.blue, \
+				255);;
 			}
 			env->sdl.pos.x++;
 		}
