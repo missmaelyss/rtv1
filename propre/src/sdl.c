@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 12:56:29 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/06 13:39:41 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/14 17:38:04 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void	ft_init_sdl(t_env *env)
 	if ((env->sdl.rend = SDL_CreateRenderer(env->sdl.win, -1, 0)) == NULL)
 		ft_error_sdl();
 	env->sdl.format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
-	SDL_SetRenderDrawColor(env->sdl.rend, 255, 255, 255, 255);
-	SDL_RenderClear(env->sdl.rend);
+	if ((env->sdl.draw = SDL_CreateTexture(env->sdl.rend, \
+		SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, \
+		WIDTH, HEIGHT)) == NULL)
+	   ft_error_sdl();	
 	env->sdl.keep = 1;
 }

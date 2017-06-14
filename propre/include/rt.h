@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 11:00:36 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/14 16:35:23 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/14 17:53:25 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,10 @@ typedef struct		s_sdl
 	SDL_Window		*win;
 	SDL_Renderer	*rend;
 	SDL_PixelFormat	*format;
+	SDL_Texture		*draw;
+	void			*tmp;
+	int				pitch;
+	Uint32			*pixels;	
 	int				keep;
 	SDL_Event		event;
 	SDL_Rect		pos;
@@ -169,5 +173,7 @@ void				ft_browse_pixels(t_env *env);
 void				ft_browse_list(t_env *env);
 void				ft_calc_sphere(t_env *env);
 void				ft_init_start(t_env *env);
+void				ft_display(t_env *env);
+void				ft_init_pixel(t_env *env);
 
 #endif
