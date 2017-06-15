@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 11:13:20 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/12 12:00:41 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/15 16:17:29 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	ft_parse_objects(t_env *env)
 		ft_parse_color(env, i);
 	else if (ft_strequ(env->parse.split[0], "position") == 1)
 		ft_parse_position(env, i);
-	else if (ft_strequ(env->parse.split[0], "direction") == 1)
-		ft_parse_direction(env, i);
+	else if (ft_strequ(env->parse.split[0], "angles") == 1)
+		ft_parse_angles(env, i);
 }
 
 void	ft_parse_position(t_env *env, int i)
@@ -71,17 +71,19 @@ void	ft_parse_position(t_env *env, int i)
 	}
 }
 
-void	ft_parse_direction(t_env *env, int i)
+void	ft_parse_angles(t_env *env, int i)
 {
 	env->check.direction = 1;
 	while (env->parse.split[i])
 	{
 		if (ft_strequ(env->parse.split[i], "x") && (i + 2) <= env->parse.tablen)
-			env->tmp.dir.x = ft_atoi(env->parse.split[i + 2]);
+			env->tmp.angles.x = ft_atoi(env->parse.split[i + 2]);
 		if (ft_strequ(env->parse.split[i], "y") && (i + 2) <= env->parse.tablen)
-			env->tmp.dir.y = ft_atoi(env->parse.split[i + 2]);
+			env->tmp.angles.y = ft_atoi(env->parse.split[i + 2]);
 		if (ft_strequ(env->parse.split[i], "z") && (i + 2) <= env->parse.tablen)
-			env->tmp.dir.z = ft_atoi(env->parse.split[i + 2]);
+			env->tmp.angles.z = ft_atoi(env->parse.split[i + 2]);
+		if (ft_strequ(env->parse.split[i], "h") && (i + 2) <= env->parse.tablen)
+			env->tmp.angles.h = ft_atoi(env->parse.split[i + 2]);
 		i++;
 	}
 }

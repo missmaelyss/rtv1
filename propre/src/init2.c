@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/14 17:02:17 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/15 12:45:23 by ghubert          ###   ########.fr       */
+/*   Updated: 2017/06/15 16:08:33 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ft_init_pixel(t_env *env)
 {
-	SDL_LockMutex(env->thread.mutex);
 	env->tmp.solution = -1;
 	env->tmp.current = NULL;
 	env->calc.solution = -1;
@@ -27,5 +26,27 @@ void	ft_init_pixel(t_env *env)
 	env->cam.pixel.z = env->cam.view_plane.z + env->cam.right.z * \
 		XINDENT * env->sdl.pos.x - env->cam.up.z * \
 		YINDENT * env->sdl.pos.y;
-	SDL_UnlockMutex(env->thread.mutex);
+}
+
+void	ft_calc_angles(t_env *env)
+{
+	t_obj	*tmp;
+
+	tmp = env->obj;
+	while (env->obj)
+	{
+		if (env->obj->type != SPHERE)
+		{
+			env->obj->dir.x = 0;
+			env->obj->dir.y = 0;
+			env->obj->dir.z = 1;
+			env->obj->dir = ft_vect_rot(env->obj->dir, env->obj->angles.z, 1);
+			env->obj->dir = ft_vect_rot(env->obj->dir, env->obj->angles.y, 2);
+			env->obj->dir = (env->obj->dir.x != 1 && env->obj->dir.x != -1) ? \
+				ft_vect_rot(env->obj->dir, env->obj->angles.x, 3) : \
+				ft_vect_rot(env->obj->dir, env->obj->angles.x, 1);
+		}
+		env->obj = env->obj->next;
+	}
+	env->obj = tmp;
 }

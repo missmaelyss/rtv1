@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/02 11:34:18 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/12 11:47:36 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/15 13:48:51 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void	ft_end_obj(t_env *env)
 		ft_strequ(env->parse.split[0], "/plane") || \
 		ft_strequ(env->parse.split[0], "/cone")) && env->parse.type == OBJ)
 	{
-		if (!env->check.position || !env->check.color || \
+		if ((!env->check.position && !ft_strequ(env->parse.split[0], "/plane"))\
+			|| !env->check.color || \
 		((ft_strequ(env->parse.split[0], "/sphere") || \
 		  ft_strequ(env->parse.split[0], "/cylinder")) && \
 		!env->check.radius) || (!env->check.direction && \

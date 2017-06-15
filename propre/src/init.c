@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 14:25:36 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/15 12:45:32 by ghubert          ###   ########.fr       */
+/*   Updated: 2017/06/15 16:14:39 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ void	ft_init_tmp(t_env *env)
 	env->tmp.pos.y = 0;
 	env->tmp.pos.z = 0;
 	env->tmp.radius = 0;
-	env->tmp.dir.x = 0;
-	env->tmp.dir.y = 0;
-	env->tmp.dir.z = 0;
+	env->tmp.angles.x = 0;
+	env->tmp.angles.y = 0;
+	env->tmp.angles.z = 0;
+	env->tmp.angles.h = 0;
 	env->tmp.color.red = 0;
 	env->tmp.color.green = 0;
 	env->tmp.color.blue = 0;
@@ -50,11 +51,11 @@ void	ft_init_check(t_env *env)
 	env->check.direction = 0;
 	env->check.color = 0;
 	env->check.radius = 0;
+	env->check.angle = 0;
 }
 
 void	ft_init_start(t_env *env)
 {
-	SDL_LockMutex(env->thread.mutex);
 	env->cam.right.x = 1;
 	env->cam.right.y = 0;
 	env->cam.right.z = 0;
@@ -70,5 +71,4 @@ void	ft_init_start(t_env *env)
 	env->cam.view_plane.z = env->cam.pos.z + ((env->cam.dir.z * VIEWPLANED) + \
 	(env->cam.up.z * (VIEWPLANEH / 2.0 * F))) - (env->cam.right.z * \
 		(VIEWPLANEW / 2.0 * F));
-	SDL_UnlockMutex(env->thread.mutex);
 }

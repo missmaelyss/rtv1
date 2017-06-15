@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 11:00:36 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/14 19:00:20 by ghubert          ###   ########.fr       */
+/*   Updated: 2017/06/15 16:14:24 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct		s_vect
 	double			x;
 	double			y;
 	double			z;
+	double			h;
 }					t_vect;
 
 typedef struct		s_calc
@@ -49,6 +50,7 @@ typedef struct		s_calc
 	double			c;
 	double			solution;
 	double			delta;
+	t_vect			delta_p;
 }					t_calc;
 
 typedef struct		s_color
@@ -75,15 +77,16 @@ typedef struct		s_obj
 	int				type;
 	int				radius;
 	t_vect			pos;
-	t_vect			dir;
+	t_vect			angles;
 	t_color			color;
 	int				angle;
+	t_vect			dir;
 }					t_obj;
 
 typedef struct		s_tmp
 {
 	t_vect			pos;
-	t_vect			dir;
+	t_vect			angles;
 	int				radius;
 	t_color			color;
 	int				angle;
@@ -93,8 +96,13 @@ typedef struct		s_tmp
 
 typedef struct		s_light
 {
-	t_vect			pos;
-	t_vect			dir;
+	t_vect          pos;
+	t_vect          solution_point;
+	t_vect          normal_vect;
+	t_vect          light_vect;
+	double          norme;
+	double          power;
+	t_vect          dir;
 }					t_light;
 
 typedef struct		s_check
@@ -170,7 +178,7 @@ void				ft_check_obj_types(t_env *env);
 void				ft_parse_objects(t_env *env);
 void				ft_parse_color(t_env *env, int i);
 void				ft_parse_position(t_env *env, int i);
-void				ft_parse_direction(t_env *env, int i);
+void				ft_parse_angles(t_env *env, int i);
 void				ft_init_tmp(t_env *env);
 void				ft_init_check(t_env *env);
 t_obj				*ft_fill_obj(t_env *env);
@@ -186,5 +194,14 @@ void				ft_calc_sphere(t_env *env);
 void				ft_init_start(t_env *env);
 void				ft_display(t_env *env);
 void				ft_init_pixel(t_env *env);
+void                ft_light(t_env *env);
+void                ft_normal_vect(t_env *env);
+void                ft_normal_sphere(t_env *env);
+void				ft_calc_plane(t_env *env);
+t_vect				ft_vect_rot(t_vect d, double angle, int axe);
+void				ft_calc_cone(t_env *env);
+void				ft_browse_pixels(t_env *env);
+void				ft_calc_angles(t_env *env);
+void				ft_calc_cyl(t_env *env);
 
 #endif
