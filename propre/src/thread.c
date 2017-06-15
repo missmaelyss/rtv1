@@ -6,7 +6,7 @@
 /*   By: ghubert <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/14 17:58:47 by ghubert           #+#    #+#             */
-/*   Updated: 2017/06/15 11:26:06 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/15 12:47:39 by ghubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,20 +132,21 @@ void	ft_thread(t_env *env)
 	int ret;
 
 	ret = 0;
+	env->thread.mutex = SDL_CreateMutex();
 	env->thread.t_1 = NULL;
 	env->thread.t_2 = NULL;
 	env->thread.t_3 = NULL;
 	env->thread.t_4 = NULL;
 	env->thread.t_1 = SDL_CreateThread(thread_1, "T1", (void *)env);
-	SDL_Delay(80);
+	SDL_Delay(60);
 	env->thread.t_2 = SDL_CreateThread(thread_2, "T2", (void *)env);
-	SDL_Delay(80);
+	SDL_Delay(60);
 	env->thread.t_3 = SDL_CreateThread(thread_3, "T3", (void *)env);
-	SDL_Delay(80);
+	SDL_Delay(60);
 	env->thread.t_4 = SDL_CreateThread(thread_4, "T4", (void *)env);
-//	SDL_Delay(170);
 	SDL_WaitThread(env->thread.t_1, &ret);
 	SDL_WaitThread(env->thread.t_2, &ret);
 	SDL_WaitThread(env->thread.t_3, &ret);
 	SDL_WaitThread(env->thread.t_4, &ret);
+	SDL_DestroyMutex(env->thread.mutex);
 }
