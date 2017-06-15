@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 11:01:18 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/15 16:26:22 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/15 20:26:11 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	ft_calc_plane(t_env *env)
 
 void	ft_calc_cone(t_env *env)
 {
+	env->calc.delta_p = ft_vect_op(env->cam.pos, '-', env->obj->pos);
 	env->calc.a = pow(cos(env->obj->angle * M_PI / 180), 2) * \
 		ft_scalar(ft_vect_op(env->cam.pixel, '-', \
 		ft_vect_op2(ft_scalar(env->cam.pixel, env->obj->dir), '*', \
@@ -65,27 +66,76 @@ void	ft_calc_cone(t_env *env)
 		pow(ft_scalar(env->calc.delta_p, env->obj->dir), 2);
 	env->calc.delta = pow(env->calc.b, 2) - (4 * env->calc.a * env->calc.c);
 	if (env->calc.delta >= 0)
+	{
 		env->calc.solution = (-env->calc.b + sqrt(env->calc.delta)) / \
 		(2 * env->calc.a) > (-env->calc.b - sqrt(env->calc.delta)) / \
 		(2 * env->calc.a) ? (-env->calc.b - sqrt(env->calc.delta)) / \
 		(2 * env->calc.a) : (-env->calc.b + sqrt(env->calc.delta)) / \
 		(2 * env->calc.a);
+	}
 }
 
 /*void	ft_calc_cyl(t_env *env)
 {
-	t_vect	cyl.directeur;
+	env->calc.delta_p = ft_vect_op(env->cam.pos, '-', env->obj->pos);
+	env->calc.a = ft_scalar(env->cam.pixel, env->cam.pixel) - \
+		pow(ft_scalar(env->cam.pixel, env->obj->dir), 2);
+	env->calc.b = 2 * (ft_scalar(env->cam.pixel, ft_vect_op(env->cam.pos,'-' \
+	, env->obj->pos)) - ft_scalar(env->cam.pixel, env->obj->dir) * \
+	ft_scalar(ft_vect_op(env->cam.pos,'-', env->obj->pos), env->obj->dir));
+	env->calc.c = ft_scalar(ft_vect_op(env->cam.pos, '-', env->obj->pos), \
+	ft_vect_op(env->cam.pos, '-', env->obj->pos)) - pow(ft_scalar(ft_vect_op \
+	(env->cam.pos,'-',env->obj->pos), env->obj->dir), 2) - pow(env->obj->radius, 2);
+	env->calc.delta = pow(env->calc.b, 2) - (4 * env->calc.a * env->calc.c);
+	if (env->calc.delta >= 0)
+		env->calc.solution = (-env->calc.b + sqrt(env->calc.delta)) / \
+							 (2 * env->calc.a) > (-env->calc.b - sqrt(env->calc.delta)) / \
+							 (2 * env->calc.a) ? (-env->calc.b - sqrt(env->calc.delta)) / \
+							 (2 * env->calc.a) : (-env->calc.b + sqrt(env->calc.delta)) / \
+							 (2 * env->calc.a);
+}*/
 
-	cyl.directeur.x = 0;
-	cyl.directeur.y = 0;
-	cyl.directeur.z = 1;
-	cyl.directeur = ft_vect_rot(cyl.directeur, env->obj.dir.z, 1);
-	cyl.directeur = ft_vect_rot(cyl.directeur, env->obj.dir.y, 2);
-	cyl.directeur = (cyl.directeur.x != 1 && cyl.directeur.x != -1) ? ft_vect_rot(cyl.directeur, env->obj.dir.x, 3) : ft_vect_rot(cyl.directeur, env->obj.dir.x, 1);
-	env->calc.delta_p = ft_vect_op(env->cam.pos, '-', env->obj.pos);
-	env->calc.a = ft_scalar(env->cam.pixel, env->cam.pixel) - pow(ft_scalar(env->cam.pixel,cyl.directeur),2);
-	env->calc.b = 2*(ft_scalar(env->cam.pixel,ft_vect_op(env->cam.pos,'-',env->obj.pos)) - ft_scalar(env->cam.pixel,cyl.directeur)*ft_scalar(ft_vect_op(env->cam.pos,'-',env->obj.pos),cyl.directeur));
-	env->calc.c = ft_scalar(ft_vect_op(env->cam.pos,'-',env->obj.pos),ft_vect_op(env->cam.pos,'-',env->obj.pos)) - pow(ft_scalar(ft_vect_op(env->cam.pos,'-',env->obj.pos), cyl.directeur),2) - pow(env->obj.radius,2);
+void	ft_calc_cyl(t_env *env)
+{
+	int k;
+	double a1;
+	double a2;
+
+	k = 50;
+	a1 = 2 * k * ft_scalar(env->cam.pixel, env->obj->dir);
+	a2 = pow(env->obj->radius, 2) + 2 * k * ft_scalar(ft_vect_op(env->cam.pos, '-', \
+	env->obj->pos), env->obj->dir) - k;
+	env->calc.a = 4 * pow(env->obj->radius, 2) * ft_scalar(env->cam.pixel, env->cam.pixel) \
+	- pow(a1, 2);
+	env->calc.b = 2 * (4 * pow(env->obj->radius, 2) * ft_scalar(env->cam.pixel, \
+	ft_vect_op(env->cam.pos, '-', env->obj->pos)) - a1 * a2);
+	env->calc.c = 4 * pow(env->obj->radius, 2) * ft_scalar(ft_vect_op(env->cam.pos, '-', \
+	env->obj->pos), ft_vect_op(env->cam.pos, '-', env->obj->pos)) - pow(a2, 2);
+	env->calc.delta = pow(env->calc.b, 2) - (4 * env->calc.a * env->calc.c);
+	if (env->calc.delta >= 0)
+		env->calc.solution = (-env->calc.b + sqrt(env->calc.delta)) / \
+							 (2 * env->calc.a) > (-env->calc.b - sqrt(env->calc.delta)) / \
+							 (2 * env->calc.a) ? (-env->calc.b - sqrt(env->calc.delta)) / \
+							 (2 * env->calc.a) : (-env->calc.b + sqrt(env->calc.delta)) / \
+							 (2 * env->calc.a);
+}
+
+/*void	ft_calc_cyl(t_env *env)
+{
+	int k;
+
+	k = 5;
+	env->calc.a = ft_scalar(env->cam.pixel, env->cam.pixel) - \
+	pow(ft_scalar(env->cam.pixel, env->obj->dir), 2);
+	env->calc.b = 2 * (ft_scalar(env->cam.pixel, ft_vect_op(env->cam.pos, \
+	'-', env->obj->pos)) - ft_scalar(env->cam.pixel, env->obj->dir) * \
+	(ft_scalar(ft_vect_op(env->cam.pixel, '-', env->obj->pos), env->obj->dir) + \
+	 2 * k));
+	env->calc.c = ft_scalar(ft_vect_op(env->cam.pos, '-', env->obj->pos), \
+	ft_vect_op(env->cam.pos, '-', env->obj->pos)) - \
+	ft_scalar(ft_vect_op(env->cam.pos, '-', env->obj->pos), env->obj->dir) * \
+	(ft_scalar(ft_vect_op(env->cam.pixel, '-', env->obj->pos), env->obj->dir) + \
+	 4 * k);
 	env->calc.delta = pow(env->calc.b, 2) - (4 * env->calc.a * env->calc.c);
 	if (env->calc.delta >= 0)
 		env->calc.solution = (-env->calc.b + sqrt(env->calc.delta)) / \
