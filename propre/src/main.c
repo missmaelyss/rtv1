@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/30 17:42:29 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/14 15:21:31 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/15 10:45:34 by ghubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int		main(int ac, char **av)
 		i = 1;
 		ft_parse(&env, av[1]);
 		ft_init_sdl(&env);
-		ft_browse_pixels(&env);
+		//ft_thread(&env);
+		ft_display(&env);
 		while (env.sdl.keep)
 		{
 			SDL_WaitEvent(&env.sdl.event);

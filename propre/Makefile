@@ -6,7 +6,7 @@
 #    By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 12:54:42 by ele-cren          #+#    #+#              #
-#    Updated: 2017/06/14 17:41:13 by ele-cren         ###   ########.fr        #
+#    Updated: 2017/06/14 18:43:21 by ghubert          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME = rt
 SRC = src/check_types.c src/init.c src/main.c src/parse_lights.c \
 	  src/parsing.c src/parse_objects.c src/parse_cam.c src/sdl.c \
 	  src/list.c src/error.c src/browse.c src/calc_obj.c src/init2.c \
-	  src/draw.c
+	  src/draw.c src/thread.c
 
 OBJ = $(patsubst src/%.c, obj/%.o, $(SRC))
 

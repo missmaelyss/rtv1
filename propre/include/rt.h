@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 11:00:36 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/14 17:53:25 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/14 19:00:20 by ghubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <libft.h>
 # include <math.h>
 # include <get_next_line.h>
+# include <SDL_thread.h>
 # include <SDL.h>
 # define WIDTH 640
 # define HEIGHT 480
@@ -126,11 +127,20 @@ typedef struct		s_sdl
 	SDL_Texture		*draw;
 	void			*tmp;
 	int				pitch;
-	Uint32			*pixels;	
+	Uint32			*pixels;
 	int				keep;
 	SDL_Event		event;
 	SDL_Rect		pos;
 }					t_sdl;
+
+typedef struct		s_thread
+{
+	SDL_Thread		*t_1;
+	SDL_Thread		*t_2;
+	SDL_Thread		*t_3;
+	SDL_Thread		*t_4;
+	SDL_mutex		*mutex;
+}					t_thread;
 
 typedef struct	s_env
 {
@@ -144,6 +154,7 @@ typedef struct	s_env
 	t_check			check;
 	t_tmp			tmp;
 	t_calc			calc;
+	t_thread		thread;
 }					t_env;
 
 void				ft_parse(t_env *env, char *av);
@@ -169,7 +180,7 @@ void				ft_init_sdl(t_env *env);
 double				ft_scalar(t_vect vec1, t_vect vec2);
 t_vect				ft_vect_op(t_vect vec1, char c, t_vect vec2);
 t_vect				ft_vect_op2(double tmp, char c, t_vect vec);
-void				ft_browse_pixels(t_env *env);
+void				ft_thread(t_env *env);
 void				ft_browse_list(t_env *env);
 void				ft_calc_sphere(t_env *env);
 void				ft_init_start(t_env *env);
