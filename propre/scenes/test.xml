@@ -12,7 +12,12 @@
 	<sphere>
 		<radius = "100" />
 		<color red = "150" green = "20" blue = "50" />
-		<position x = "0" y = "800" z = "0" />
+		<position x = "-150" y = "800" z = "0" />
+	</sphere>
+	<sphere>
+		<radius = "50" />
+		<color red = "0" green = "200" blue = "80" />
+		<position x = "80" y = "400" z = "0" />
 	</sphere>
 </objects>
 
