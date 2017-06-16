@@ -6,7 +6,7 @@
 /*   By: mawasche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/15 12:37:30 by mawasche          #+#    #+#             */
-/*   Updated: 2017/06/15 16:50:05 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/16 14:26:03 by mawasche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_normal_cone(t_env *env)
 void	ft_normal_cyl(t_env *env)
 {
 	env->light.normal_vect.x = 2 * env->light.solution_point.x;
-	env->light.normal_vect.y = 2 * env->light.solution_point.y;
+	env->light.normal_vect.y = -2 * env->light.solution_point.y;
 	env->light.normal_vect.z = 0;
 	env->light.norme = sqrt(pow(env->light.normal_vect.x, 2) +\
 		pow(env->light.normal_vect.y, 2) + pow(env->light.normal_vect.z, 2));
