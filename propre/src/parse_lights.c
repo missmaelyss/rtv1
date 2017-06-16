@@ -12,25 +12,35 @@
 
 #include <rt.h>
 
-void	ft_fill_lights(t_env *env)
+void	ft_tab_lights(t_env *env)
 {
 	int		i;
 
 	i = 0;
 	if (ft_strequ(env->parse.split[0], "position") == 1)
 	{
+        if (env->light == NULL)
+        {
+            env->light = ft_fill_light(env);
+            env->tmp_light = env->light;
+        }
+        else
+        {
+            env->light->next = ft_fill_light(env);
+            env->light = env->light->next;
+        }
 		env->check.position = 1;
 		while (env->parse.split[i])
 		{
 			if (ft_strequ(env->parse.split[i], "x") && (i + 2) \
 										<= env->parse.tablen)
-				env->light.pos.x = ft_atoi(env->parse.split[i + 2]);
+				env->light->pos.x = ft_atoi(env->parse.split[i + 2]);
 			else if (ft_strequ(env->parse.split[i], "y") && (i + 2) \
 										<= env->parse.tablen)
-				env->light.pos.y = ft_atoi(env->parse.split[i + 2]);
+				env->light->pos.y = ft_atoi(env->parse.split[i + 2]);
 			else if (ft_strequ(env->parse.split[i], "z") && (i + 2) \
 										<= env->parse.tablen)
-				env->light.pos.z = ft_atoi(env->parse.split[i + 2]);
+				env->light->pos.z = ft_atoi(env->parse.split[i + 2]);
 			i++;
 		}
 	}

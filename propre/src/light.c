@@ -6,7 +6,7 @@
 /*   By: mawasche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/15 12:37:30 by mawasche          #+#    #+#             */
-/*   Updated: 2017/06/16 14:26:03 by mawasche         ###   ########.fr       */
+/*   Updated: 2017/06/16 18:25:41 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,53 +14,53 @@
 
 void	ft_normal_cone(t_env *env)
 {
-	env->light.normal_vect.x = 2 * env->light.solution_point.x;
-	env->light.normal_vect.y = -2 * env->light.solution_point.y;
-	env->light.normal_vect.z = 2 * env->light.solution_point.z;
-	env->light.norme = sqrt(pow(env->light.normal_vect.x, 2) +\
-		pow(env->light.normal_vect.y, 2) + pow(env->light.normal_vect.z, 2));
-	env->light.normal_vect.x /= env->light.norme;
-	env->light.normal_vect.y /= env->light.norme;
-	env->light.normal_vect.z /= env->light.norme;
+	env->light->normal_vect.x = 2 * env->light->solution_point.x;
+	env->light->normal_vect.y = -2 * env->light->solution_point.y;
+	env->light->normal_vect.z = 2 * env->light->solution_point.z;
+	env->light->norme = sqrt(pow(env->light->normal_vect.x, 2) +\
+		pow(env->light->normal_vect.y, 2) + pow(env->light->normal_vect.z, 2));
+	env->light->normal_vect.x /= env->light->norme;
+	env->light->normal_vect.y /= env->light->norme;
+	env->light->normal_vect.z /= env->light->norme;
 }
 
 void	ft_normal_cyl(t_env *env)
 {
-	env->light.normal_vect.x = 2 * env->light.solution_point.x;
-	env->light.normal_vect.y = -2 * env->light.solution_point.y;
-	env->light.normal_vect.z = 0;
-	env->light.norme = sqrt(pow(env->light.normal_vect.x, 2) +\
-		pow(env->light.normal_vect.y, 2) + pow(env->light.normal_vect.z, 2));
-	env->light.normal_vect.x /= env->light.norme;
-	env->light.normal_vect.y /= env->light.norme;
-	env->light.normal_vect.z /= env->light.norme;
+	env->light->normal_vect.x = 2 * env->light->solution_point.x;
+	env->light->normal_vect.y = -2 * env->light->solution_point.y;
+	env->light->normal_vect.z = 0;
+	env->light->norme = sqrt(pow(env->light->normal_vect.x, 2) +\
+		pow(env->light->normal_vect.y, 2) + pow(env->light->normal_vect.z, 2));
+	env->light->normal_vect.x /= env->light->norme;
+	env->light->normal_vect.y /= env->light->norme;
+	env->light->normal_vect.z /= env->light->norme;
 }
 
 void	ft_normal_plane(t_env *env)
 {
-	env->light.normal_vect.x = env->tmp.current->dir.x;
-	env->light.normal_vect.y = env->tmp.current->dir.y;
-	env->light.normal_vect.z = env->tmp.current->dir.z;
-	env->light.norme = sqrt(pow(env->light.normal_vect.x, 2) +\
-		pow(env->light.normal_vect.y, 2) + pow(env->light.normal_vect.z, 2));
-	env->light.normal_vect.x /= env->light.norme;
-	env->light.normal_vect.y /= env->light.norme;
-	env->light.normal_vect.z /= env->light.norme;
+	env->light->normal_vect.x = env->tmp.current->dir.x;
+	env->light->normal_vect.y = env->tmp.current->dir.y;
+	env->light->normal_vect.z = env->tmp.current->dir.z;
+	env->light->norme = sqrt(pow(env->light->normal_vect.x, 2) +\
+		pow(env->light->normal_vect.y, 2) + pow(env->light->normal_vect.z, 2));
+	env->light->normal_vect.x /= env->light->norme;
+	env->light->normal_vect.y /= env->light->norme;
+	env->light->normal_vect.z /= env->light->norme;
 }
 
 void	ft_normal_sphere(t_env *env)
 {
-	env->light.normal_vect.x = env->light.solution_point.x -\
+	env->light->normal_vect.x = env->light->solution_point.x -\
 		 env->tmp.current->pos.x;
-	env->light.normal_vect.y = env->light.solution_point.y -\
+	env->light->normal_vect.y = env->light->solution_point.y -\
 		 env->tmp.current->pos.y;
-	env->light.normal_vect.z = env->light.solution_point.z -\
+	env->light->normal_vect.z = env->light->solution_point.z -\
 		 env->tmp.current->pos.z;
-	env->light.norme = sqrt(pow(env->light.normal_vect.x, 2) +\
-		pow(env->light.normal_vect.y, 2) + pow(env->light.normal_vect.z, 2));
-	env->light.normal_vect.x /= env->light.norme;
-	env->light.normal_vect.y /= env->light.norme;
-	env->light.normal_vect.z /= env->light.norme;
+	env->light->norme = sqrt(pow(env->light->normal_vect.x, 2) +\
+		pow(env->light->normal_vect.y, 2) + pow(env->light->normal_vect.z, 2));
+	env->light->normal_vect.x /= env->light->norme;
+	env->light->normal_vect.y /= env->light->norme;
+	env->light->normal_vect.z /= env->light->norme;
 }
 
 void	ft_normal_vect(t_env *env)
@@ -76,24 +76,34 @@ void	ft_normal_vect(t_env *env)
 
 void	ft_light(t_env *env)
 {
-	env->light.solution_point.x = env->cam.pos.x + env->cam.pixel.x *\
+    env->tmp.power = 0;
+    while (env->light)
+    {
+	env->light->solution_point.x = env->cam.pos.x + env->cam.pixel.x *\
 		 env->tmp.solution;
-	env->light.solution_point.y = env->cam.pos.y + env->cam.pixel.y *\
+	env->light->solution_point.y = env->cam.pos.y + env->cam.pixel.y *\
 		 env->tmp.solution;
-	env->light.solution_point.z = env->cam.pos.z + env->cam.pixel.z *\
+	env->light->solution_point.z = env->cam.pos.z + env->cam.pixel.z *\
 		 env->tmp.solution;
 	ft_normal_vect(env);
-	env->light.light_vect.x = env->light.pos.x - env->light.solution_point.x;
-	env->light.light_vect.y = env->light.pos.y - env->light.solution_point.y;
-	env->light.light_vect.z = env->light.pos.z - env->light.solution_point.z;
-	env->light.norme = sqrt(pow(env->light.light_vect.x,2) +\
-		pow(env->light.light_vect.y,2) + pow(env->light.light_vect.z,2));
-	env->light.light_vect.x /= env->light.norme;
-	env->light.light_vect.y /= env->light.norme;
-	env->light.light_vect.z /= env->light.norme;
-	env->light.power = env->light.normal_vect.x * env->light.light_vect.x +\
-		 env->light.normal_vect.y *env->light.light_vect.y +\
-		 env->light.normal_vect.z * env->light.light_vect.z;
-	if (env->light.power < 0)
-		env->light.power = 0;
+	env->light->light_vect.x = env->light->pos.x - env->light->solution_point.x;
+	env->light->light_vect.y = env->light->pos.y - env->light->solution_point.y;
+	env->light->light_vect.z = env->light->pos.z - env->light->solution_point.z;
+	env->light->norme = sqrt(pow(env->light->light_vect.x,2) +\
+		pow(env->light->light_vect.y,2) + pow(env->light->light_vect.z,2));
+	env->light->light_vect.x /= env->light->norme;
+	env->light->light_vect.y /= env->light->norme;
+	env->light->light_vect.z /= env->light->norme;
+	env->light->power = env->light->normal_vect.x * env->light->light_vect.x +\
+		 env->light->normal_vect.y *env->light->light_vect.y +\
+		 env->light->normal_vect.z * env->light->light_vect.z;
+	if (env->light->power < 0)
+		env->light->power = 0;
+        env->tmp.power += env->light->power;
+    if (!(env->light->next))
+        break;
+    env->light = env->light->next;
+    }
+    env->tmp.power = (env->tmp.power > 1) ? 1 : env->tmp.power;
+    env->light = env->tmp_light;
 }

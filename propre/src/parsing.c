@@ -28,7 +28,7 @@ void	ft_parse(t_env *env, char *av)
 		(env->parse.type == OBJ && ft_strequ(env->parse.split[0], "objects") \
 		 == 0) ? ft_check_objects(env) : "";
 		(env->parse.type == LIGHT && ft_strequ(env->parse.split[0], "light") \
-		 == 0) ? ft_fill_lights(env) : "";
+		 == 0) ? ft_tab_lights(env) : "";
 		ft_tabdel(&env->parse.split);
 		ft_strdel(&env->parse.line);
 	}
@@ -36,4 +36,5 @@ void	ft_parse(t_env *env, char *av)
 		ft_error();
 	if (close(env->parse.fd) == -1)
 		ft_error_file();
+    env->light = env->tmp_light;
 }

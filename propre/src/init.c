@@ -26,6 +26,8 @@ void	ft_init_env(t_env *env)
 	env->parse.line = NULL;
 	env->obj = NULL;
 	env->tmp_obj = NULL;
+    env->light = NULL;
+     env->tmp_light = NULL;
 	env->tmp.current = NULL;
 }
 

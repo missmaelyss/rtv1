@@ -6,7 +6,7 @@
 /*   By: mawasche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/16 14:31:31 by mawasche          #+#    #+#             */
-/*   Updated: 2017/06/16 16:51:27 by mawasche         ###   ########.fr       */
+/*   Updated: 2017/06/16 18:26:16 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_shadow(t_env *env)
 	void    (*ft_calc[4])(t_env*, t_vect ray_dir, t_vect ray_pos);
 	t_obj   *lst;
 	int		i;
-
+    
 	i = 0;
 	ft_calc[0] = ft_calc_sphere;
 	ft_calc[1] = ft_calc_plane;
@@ -28,15 +28,22 @@ void	ft_shadow(t_env *env)
 	while (env->obj)
 	{
 		env->calc.solution = -1;
-		ft_calc[env->obj->type - 1](env, env->light.light_vect, env->light.solution_point);
-		if (env->calc.solution > 0 && env->tmp.i != i)
-		{
-			printf("%d\t%d\n", env->tmp.i, i);
-			env->tmp.darkness = 0.2;
-			break;
-		}
-		i++;
-		env->obj = env->obj->next;
+        //while (env->light)
+        //{
+            ft_calc[env->obj->type - 1](env, env->light->light_vect, env->light->solution_point);
+            if (env->calc.solution >= 0 && env->tmp.i != i)
+            {
+                env->tmp.darkness -= 0.8;
+                //break;
+            }
+           // if (!(env->light->next))
+            //    break;
+            //env->light = env->light->next;
+        //}
+        i++;
+        env->obj = env->obj->next;
 	}
+    env->tmp.darkness = (env->tmp.darkness <= 0) ? 0.1 : env->tmp.darkness;
 	env->obj = lst;
+   // env->light = env->tmp_light;
 }

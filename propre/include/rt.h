@@ -94,16 +94,19 @@ typedef struct		s_tmp
 	t_obj			*current;
 	int				i;
 	double			darkness;
+    double          power;
 }					t_tmp;
 
 typedef struct		s_light
 {
-	t_vect          pos;
+    struct s_light	*next;
+    struct s_light	*prev;
+    t_vect          pos;
 	t_vect          solution_point;
 	t_vect          normal_vect;
 	t_vect          light_vect;
 	double          norme;
-	double          power;
+    double          power;
 	t_vect          dir;
 }					t_light;
 
@@ -158,8 +161,8 @@ typedef struct	s_env
 	t_sdl			sdl;
 	t_obj			*obj;
 	t_obj			*tmp_obj;
-	t_light			light;
-	//t_light			*tmp_light;
+	t_light			*light;
+	t_light			*tmp_light;
 	t_cam			cam;
 	t_check			check;
 	t_tmp			tmp;
@@ -170,6 +173,7 @@ typedef struct	s_env
 void				ft_parse(t_env *env, char *av);
 void				ft_check_types(t_env *env);
 void				ft_fill_cam(t_env *env);
+t_light	*ft_fill_light(t_env *env);
 void				ft_pos_cam(t_env *env, int i);
 void				ft_error(void);
 void				ft_error_file(void);
@@ -185,7 +189,7 @@ void				ft_init_tmp(t_env *env);
 void				ft_init_check(t_env *env);
 t_obj				*ft_fill_obj(t_env *env);
 void				ft_end_obj(t_env *env);
-void				ft_fill_lights(t_env *env);
+void				ft_tab_lights(t_env *env);
 void				ft_init_sdl(t_env *env);
 double				ft_scalar(t_vect vec1, t_vect vec2);
 t_vect				ft_vect_op(t_vect vec1, char c, t_vect vec2);
