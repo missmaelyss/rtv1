@@ -43,6 +43,31 @@ int		main(int ac, char **av)
 			if (env.sdl.event.type == SDL_QUIT || \
 								env.sdl.event.key.keysym.sym == SDLK_ESCAPE)
 				env.sdl.keep = 0;
+            if (env.sdl.event.type == SDL_KEYDOWN)
+            {
+                if (env.sdl.event.key.keysym.sym == SDLK_LEFT)
+                    env.cam.pos.x -= 0.01;
+                if (env.sdl.event.key.keysym.sym == SDLK_RIGHT)
+                    env.cam.pos.x += 0.01;
+                if (env.sdl.event.key.keysym.sym == SDLK_UP)
+                    env.cam.pos.y += 0.01;
+                if (env.sdl.event.key.keysym.sym == SDLK_DOWN)
+                    env.cam.pos.y -= 0.01;
+                
+                if (env.sdl.event.key.keysym.sym == 1073741919)
+                    env.cam.dir = ft_vect_rot(env.cam.dir, -1, 1);
+                if (env.sdl.event.key.keysym.sym == 1073741921)
+                    env.cam.dir = ft_vect_rot(env.cam.dir, 1, 1);
+                if (env.sdl.event.key.keysym.sym == 1073741916)
+                    env.cam.dir = ft_vect_rot(env.cam.dir, -1, 2);
+                if (env.sdl.event.key.keysym.sym == 1073741918)
+                    env.cam.dir = ft_vect_rot(env.cam.dir, 1, 2);
+                if (env.sdl.event.key.keysym.sym == 1073741913)
+                    env.cam.dir = ft_vect_rot(env.cam.dir, -1, 3);
+                if (env.sdl.event.key.keysym.sym == 1073741915)
+                    env.cam.dir = ft_vect_rot(env.cam.dir, 1, 3);
+                ft_display(&env);
+            }
 		}
 		SDL_DestroyRenderer(env.sdl.rend);
 		SDL_DestroyWindow(env.sdl.win);
