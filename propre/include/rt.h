@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 11:00:36 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/15 16:14:24 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/16 13:44:51 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,18 +190,18 @@ t_vect				ft_vect_op(t_vect vec1, char c, t_vect vec2);
 t_vect				ft_vect_op2(double tmp, char c, t_vect vec);
 void				ft_thread(t_env *env);
 void				ft_browse_list(t_env *env);
-void				ft_calc_sphere(t_env *env);
 void				ft_init_start(t_env *env);
 void				ft_display(t_env *env);
 void				ft_init_pixel(t_env *env);
 void                ft_light(t_env *env);
 void                ft_normal_vect(t_env *env);
 void                ft_normal_sphere(t_env *env);
-void				ft_calc_plane(t_env *env);
+void				ft_calc_plane(t_env *env, t_vect ray_dir, t_vect ray_pos);
+void				ft_calc_sphere(t_env *env, t_vect ray_dir, t_vect ray_pos);
+void				ft_calc_cone(t_env *env, t_vect ray_dir, t_vect ray_pos);
+void				ft_calc_cyl(t_env *env, t_vect ray_dir, t_vect ray_pos);
 t_vect				ft_vect_rot(t_vect d, double angle, int axe);
-void				ft_calc_cone(t_env *env);
 void				ft_browse_pixels(t_env *env);
 void				ft_calc_angles(t_env *env);
-void				ft_calc_cyl(t_env *env);
 
 #endif
