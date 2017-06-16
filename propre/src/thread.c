@@ -6,7 +6,7 @@
 /*   By: ghubert <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/14 17:58:47 by ghubert           #+#    #+#             */
-/*   Updated: 2017/06/16 16:19:39 by mawasche         ###   ########.fr       */
+/*   Updated: 2017/06/16 17:14:02 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ void	ft_browse_pixels(t_env *env)
 				env->light.power * env->tmp.darkness, env->tmp.current->color.blue * \
 				env->light.power * env->tmp.darkness, 255);
 			}
+			else
+				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
+				SDL_MapRGBA(env->sdl.format, 0, 0, 0, 255);
+
 			env->sdl.pos.x++;
 		}
 		env->sdl.pos.y++;
