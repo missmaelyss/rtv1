@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light.c                                            :+:      :+:    :+:   */
+/*   light->c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawasche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/15 12:37:30 by mawasche          #+#    #+#             */
-/*   Updated: 2017/06/16 18:25:41 by marnaud          ###   ########.fr       */
+/*   Updated: 2017/06/19 13:52:18 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,6 @@ void	ft_normal_vect(t_env *env)
 
 void	ft_light(t_env *env)
 {
-    env->tmp.power = 0;
-    while (env->light)
-    {
 	env->light->solution_point.x = env->cam.pos.x + env->cam.pixel.x *\
 		 env->tmp.solution;
 	env->light->solution_point.y = env->cam.pos.y + env->cam.pixel.y *\
@@ -99,11 +96,4 @@ void	ft_light(t_env *env)
 		 env->light->normal_vect.z * env->light->light_vect.z;
 	if (env->light->power < 0)
 		env->light->power = 0;
-        env->tmp.power += env->light->power;
-    if (!(env->light->next))
-        break;
-    env->light = env->light->next;
-    }
-    env->tmp.power = (env->tmp.power > 1) ? 1 : env->tmp.power;
-    env->light = env->tmp_light;
 }

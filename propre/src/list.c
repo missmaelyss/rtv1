@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/30 13:08:14 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/15 16:23:19 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/19 13:35:04 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,25 @@ t_obj	*ft_fill_obj(t_env *env)
 	obj->next = NULL;
 	obj->prev = env->tmp_obj;
 	return (obj);
+}
+
+t_light	*ft_fill_light(t_env *env)
+{
+	t_light	*light;
+
+	light = NULL;
+	if ((light = (t_light *)malloc(sizeof(t_light))) == NULL)
+		ft_error();
+	light->pos.x = env->tmp.pos.x;
+	light->pos.y = env->tmp.pos.y;
+	light->pos.z = env->tmp.pos.z;
+	light->dir.x = env->tmp.angles.x;
+	light->dir.y = env->tmp.angles.y;
+	light->dir.z = env->tmp.angles.z;
+	light->color.red = env->tmp.color.red;
+	light->color.green = env->tmp.color.green;
+	light->color.blue = env->tmp.color.blue;
+	light->next = NULL;
+	light->prev = env->tmp_light;
+	return (light);
 }

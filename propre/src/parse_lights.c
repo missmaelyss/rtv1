@@ -6,42 +6,34 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/02 16:00:09 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/06 11:41:15 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/19 13:52:56 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 
-void	ft_tab_lights(t_env *env)
+void	ft_check_lights(t_env *env)
+{
+	ft_check_light_types(env);
+	if (((env->parse.type_light == NORMAL && !ft_strequ(env->parse.split[0], \
+			"normal")) || (env->parse.type_light == SPOT && \
+			!ft_strequ(env->parse.split[0], "spotlight")) || \
+			(env->parse.type_light == POINT && !ft_strequ(env->parse.split[0], \
+			"pointlight"))) && env->parse.type == LIGHT)
+		ft_parse_lights(env);
+	ft_end_lights(env);
+}
+
+void	ft_parse_lights(t_env *env)
 {
 	int		i;
 
 	i = 0;
-	if (ft_strequ(env->parse.split[0], "position") == 1)
-	{
-        if (env->light == NULL)
-        {
-            env->light = ft_fill_light(env);
-            env->tmp_light = env->light;
-        }
-        else
-        {
-            env->light->next = ft_fill_light(env);
-            env->light = env->light->next;
-        }
-		env->check.position = 1;
-		while (env->parse.split[i])
-		{
-			if (ft_strequ(env->parse.split[i], "x") && (i + 2) \
-										<= env->parse.tablen)
-				env->light->pos.x = ft_atoi(env->parse.split[i + 2]);
-			else if (ft_strequ(env->parse.split[i], "y") && (i + 2) \
-										<= env->parse.tablen)
-				env->light->pos.y = ft_atoi(env->parse.split[i + 2]);
-			else if (ft_strequ(env->parse.split[i], "z") && (i + 2) \
-										<= env->parse.tablen)
-				env->light->pos.z = ft_atoi(env->parse.split[i + 2]);
-			i++;
-		}
-	}
+	if ((env->parse.type_light == SPOT || env->parse.type_light == POINT) &&\
+			ft_strequ(env->parse.split[0], "direction"))
+		ft_parse_angles(env, i);
+	else if (ft_strequ(env->parse.split[0], "position"))
+		ft_parse_position(env, i);
+	else if (ft_strequ(env->parse.split[0], "color"))
+		ft_parse_color(env, i);
 }

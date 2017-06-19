@@ -17,17 +17,6 @@ double	ft_scalar(t_vect vec1, t_vect vec2)
 	return (vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z);
 }
 
-t_vect  ft_normalize(t_vect vec)
-{
-    double norme;
-    
-    norme = sqrt(pow(vec.x, 2)+ pow(vec.y, 2) + pow(vec.z, 2));
-    vec.x = vec.x / norme;
-    vec.y = vec.y / norme;
-    vec.z = vec.z / norme;
-    return (vec);
-}
-
 t_vect	ft_vect_op(t_vect vec1, char c, t_vect vec2)
 {
 	t_vect	res;

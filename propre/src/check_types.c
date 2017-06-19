@@ -1,12 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   check_types.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/02 11:34:18 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/15 13:48:51 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/19 13:31:26 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +32,21 @@ void	ft_check_obj_types(t_env *env)
 		env->parse.objects++;
 		env->parse.type_obj = CONE;
 	}
+	ft_check_obj_types2(env);
+}
+
+void	ft_check_obj_types2(t_env *env)
+{
+	if (ft_strequ(env->parse.split[0], "parabole"))
+	{
+		env->parse.objects++;
+		env->parse.type_obj = PARA;
+	}
+	else if (ft_strequ(env->parse.split[0], "ellipse"))
+	{
+		env->parse.objects++;
+		env->parse.type_obj = ELL;
+	}
 }
 
 void	ft_check_types(t_env *env)
@@ -56,40 +69,26 @@ void	ft_check_types(t_env *env)
 	{
 		(ft_strequ("/camera", env->parse.split[0]) == 1 && (env->check.position\
 						== 0 || env->check.direction == 0)) ? ft_error() : "";
-		(ft_strequ("/light", env->parse.split[0]) == 1 && (env->check.position\
-						== 0)) ? ft_error() : "";
 		env->parse.type = 0;
 		ft_init_check(env);
 	}
 }
 
-void	ft_end_obj(t_env *env)
+void	ft_check_light_types(t_env *env)
 {
-	if ((ft_strequ(env->parse.split[0], "/sphere") || \
-		ft_strequ(env->parse.split[0], "/cylinder") || \
-		ft_strequ(env->parse.split[0], "/plane") || \
-		ft_strequ(env->parse.split[0], "/cone")) && env->parse.type == OBJ)
+	if (ft_strequ(env->parse.split[0], "normal"))
 	{
-		if ((!env->check.position && !ft_strequ(env->parse.split[0], "/plane"))\
-			|| !env->check.color || \
-		((ft_strequ(env->parse.split[0], "/sphere") || \
-		  ft_strequ(env->parse.split[0], "/cylinder")) && \
-		!env->check.radius) || (!env->check.direction && \
-		!ft_strequ(env->parse.split[0], "/sphere")) || (!env->check.angle && \
-		ft_strequ(env->parse.split[0], "/cone")))
-			ft_error();
-		ft_init_check(env);
-		if (env->obj == NULL)
-		{
-			env->obj = ft_fill_obj(env);
-			env->tmp_obj = env->obj;
-		}
-		else
-		{
-			env->tmp_obj->next = ft_fill_obj(env);
-			env->tmp_obj = env->tmp_obj->next;
-		}
-		ft_init_tmp(env);
-		env->parse.type_obj = 0;
+		env->parse.lights++;
+		env->parse.type_light = NORMAL;
+	}
+	else if (ft_strequ(env->parse.split[0], "spotlight"))
+	{
+		env->parse.lights++;
+		env->parse.type_light = SPOT;
+	}
+	else if (ft_strequ(env->parse.split[0], "pointlight"))
+	{
+		env->parse.lights++;
+		env->parse.type_light = POINT;
 	}
 }

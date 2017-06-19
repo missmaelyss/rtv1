@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 11:00:36 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/16 17:06:55 by marnaud          ###   ########.fr       */
+/*   Updated: 2017/06/19 14:35:19 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@
 # define XINDENT VIEWPLANEW / (double)WIDTH
 # define YINDENT VIEWPLANEH / (double)HEIGHT
 
-enum {SPHERE = 1, PLANE = 2, CYL = 3, CONE = 4};
+enum {SPHERE = 1, PLANE = 2, CYL = 3, CONE = 4, PARA = 5, ELL = 6};
 enum {OBJ = 1, LIGHT = 2, CAM = 3};
+enum {NORMAL = 1, SPOT = 2, POINT = 3};
 
 typedef struct		s_vect
 {
@@ -108,6 +109,7 @@ typedef struct		s_light
 	double          norme;
     double          power;
 	t_vect          dir;
+	t_color			color;
 }					t_light;
 
 typedef struct		s_check
@@ -127,6 +129,7 @@ typedef struct		s_parse
 	char			**split;
 	int				type;
 	int				type_obj;
+	int				type_light;
 	int				objects;
 	int				cam;
 	int				lights;
@@ -188,8 +191,11 @@ void				ft_parse_angles(t_env *env, int i);
 void				ft_init_tmp(t_env *env);
 void				ft_init_check(t_env *env);
 t_obj				*ft_fill_obj(t_env *env);
+t_light				*ft_fill_light(t_env *env);
 void				ft_end_obj(t_env *env);
-void				ft_tab_lights(t_env *env);
+void				ft_check_lights(t_env *env);
+void				ft_parse_lights(t_env *env);
+void				ft_end_lights(t_env *env);
 void				ft_init_sdl(t_env *env);
 double				ft_scalar(t_vect vec1, t_vect vec2);
 t_vect				ft_vect_op(t_vect vec1, char c, t_vect vec2);
@@ -210,5 +216,7 @@ t_vect				ft_vect_rot(t_vect d, double angle, int axe);
 void				ft_browse_pixels(t_env *env);
 void				ft_calc_angles(t_env *env);
 void				ft_shadow(t_env *env);
+void				ft_check_light_types(t_env *env);
+void				ft_check_error_obj(t_env *env);
 
 #endif

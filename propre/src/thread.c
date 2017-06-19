@@ -6,7 +6,7 @@
 /*   By: ghubert <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/14 17:58:47 by ghubert           #+#    #+#             */
-/*   Updated: 2017/06/16 17:14:02 by marnaud          ###   ########.fr       */
+/*   Updated: 2017/06/19 14:07:34 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,10 @@ void	ft_browse_pixels(t_env *env)
 				ft_shadow(env);
 				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
 				SDL_MapRGBA(env->sdl.format, env->tmp.current->color.red * \
-				env->light.power * env->tmp.darkness, env->tmp.current->color.green * \
-				env->light.power * env->tmp.darkness, env->tmp.current->color.blue * \
-				env->light.power * env->tmp.darkness, 255);
+				env->light->power * env->tmp.darkness, env->tmp.current->color.green * \
+				env->light->power * env->tmp.darkness, env->tmp.current->color.blue * \
+				env->light->power * env->tmp.darkness, 255);
 			}
-			else
-				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
-				SDL_MapRGBA(env->sdl.format, 0, 0, 0, 255);
-
 			env->sdl.pos.x++;
 		}
 		env->sdl.pos.y++;
@@ -66,12 +62,12 @@ int		thread_1(void *env_1)
 			{
 				ft_light(env);
 				ft_shadow(env);
-				//env->light.power = 1;
+				//env->light->power = 1;
 				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
 				SDL_MapRGBA(env->sdl.format, env->tmp.current->color.red * \
-				env->light.power, env->tmp.current->color.green * \
-				env->light.power, env->tmp.current->color.blue * \
-				env->light.power, 255);
+				env->light->power, env->tmp.current->color.green * \
+				env->light->power, env->tmp.current->color.blue * \
+				env->light->power, 255);
 			}
 			env->sdl.pos.x++;
 		}
@@ -97,12 +93,12 @@ int		thread_2(void *env_1)
 			{
 				ft_light(env);
 				ft_shadow(env);
-				//env->light.power = 1;
+				//env->light->power = 1;
 				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
 				SDL_MapRGBA(env->sdl.format, env->tmp.current->color.red * \
-				env->light.power, env->tmp.current->color.green * \
-				env->light.power, env->tmp.current->color.blue * \
-				env->light.power, 255);
+				env->light->power, env->tmp.current->color.green * \
+				env->light->power, env->tmp.current->color.blue * \
+				env->light->power, 255);
 			}
 			env->sdl.pos.x++;
 		}
@@ -128,12 +124,12 @@ int		thread_3(void *env_1)
 			{
 				ft_light(env);
 				ft_shadow(env);
-				//env->light.power = 1;
+				//env->light->power = 1;
 				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
 				SDL_MapRGBA(env->sdl.format, env->tmp.current->color.red * \
-				env->light.power, env->tmp.current->color.green * \
-				env->light.power, env->tmp.current->color.blue * \
-				env->light.power, 255);
+				env->light->power, env->tmp.current->color.green * \
+				env->light->power, env->tmp.current->color.blue * \
+				env->light->power, 255);
 			}
 			env->sdl.pos.x++;
 		}
@@ -159,12 +155,12 @@ int		thread_4(void *env_1)
 			{
 				ft_light(env);
 				ft_shadow(env);
-				//env->light.power = 1;
+				//env->light->power = 1;
 				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
 				SDL_MapRGBA(env->sdl.format, env->tmp.current->color.red * \
-				env->light.power, env->tmp.current->color.green * \
-				env->light.power, env->tmp.current->color.blue * \
-				env->light.power, 255);
+				env->light->power, env->tmp.current->color.green * \
+				env->light->power, env->tmp.current->color.blue * \
+				env->light->power, 255);
 			}
 			env->sdl.pos.x++;
 		}
