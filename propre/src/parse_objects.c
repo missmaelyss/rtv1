@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 11:13:20 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/19 14:40:01 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/19 15:07:45 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 void	ft_check_objects(t_env *env)
 {
 	ft_check_obj_types(env);
-	if (((env->parse.type_obj == SPHERE && ft_strequ(env->parse.split[0], \
-		"sphere") == 0) || (env->parse.type_obj == PLANE && \
-		ft_strequ(env->parse.split[0], "plane") == 0) || \
-			(env->parse.type_obj == CYL && ft_strequ(env->parse.split[0], \
-					"cylinder") == 0) || (env->parse.type_obj == CONE && \
-				ft_strequ(env->parse.split[0], "cone") == 0)) \
-									&& env->parse.type == OBJ)
+	if (((env->parse.type_obj == SPHERE && !ft_strequ(env->parse.split[0], \
+		"sphere")) || (env->parse.type_obj == PLANE && !ft_strequ(env->parse\
+		.split[0], "plane")) || (env->parse.type_obj == CYL && \
+		!ft_strequ(env->parse.split[0], "cylinder")) || (env->parse.type_obj\
+		== CONE && !ft_strequ(env->parse.split[0], "cone")) || (env->parse.\
+		type_obj == PARA && !ft_strequ(env->parse.split[0], "parabole")) || \
+		(env->parse.type_obj == ELL && !ft_strequ(env->parse.split[0], \
+		"ellipse"))) && env->parse.type == OBJ)
 	{
 		env->parse.objects++;
 		ft_parse_objects(env);

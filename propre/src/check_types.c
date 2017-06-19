@@ -13,40 +13,17 @@
 void	ft_check_obj_types(t_env *env)
 {
 	if (ft_strequ(env->parse.split[0], "sphere") == 1)
-	{
-		env->parse.objects++;
 		env->parse.type_obj = SPHERE;
-	}
 	else if (ft_strequ(env->parse.split[0], "plane") == 1)
-	{
-		env->parse.objects++;
 		env->parse.type_obj = PLANE;
-	}
 	else if (ft_strequ(env->parse.split[0], "cylinder") == 1)
-	{
-		env->parse.objects++;
 		env->parse.type_obj = CYL;
-	}
 	else if (ft_strequ(env->parse.split[0], "cone") == 1)
-	{
-		env->parse.objects++;
 		env->parse.type_obj = CONE;
-	}
-	ft_check_obj_types2(env);
-}
-
-void	ft_check_obj_types2(t_env *env)
-{
-	if (ft_strequ(env->parse.split[0], "parabole"))
-	{
-		env->parse.objects++;
+	else if (ft_strequ(env->parse.split[0], "parabole"))
 		env->parse.type_obj = PARA;
-	}
 	else if (ft_strequ(env->parse.split[0], "ellipse"))
-	{
-		env->parse.objects++;
 		env->parse.type_obj = ELL;
-	}
 }
 
 void	ft_check_types(t_env *env)
