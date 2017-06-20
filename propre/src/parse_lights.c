@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/02 16:00:09 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/19 13:52:56 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/19 17:21:14 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@ void	ft_check_lights(t_env *env)
 {
 	ft_check_light_types(env);
 	if (((env->parse.type_light == NORMAL && !ft_strequ(env->parse.split[0], \
-			"normal")) || (env->parse.type_light == SPOT && \
+			"basic")) || (env->parse.type_light == SPOT && \
 			!ft_strequ(env->parse.split[0], "spotlight")) || \
 			(env->parse.type_light == POINT && !ft_strequ(env->parse.split[0], \
 			"pointlight"))) && env->parse.type == LIGHT)
+	{
+		env->parse.lights++;
 		ft_parse_lights(env);
+	}
 	ft_end_lights(env);
 }
 

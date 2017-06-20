@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 11:00:36 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/19 15:07:10 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/20 15:49:37 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@
 enum {SPHERE = 1, PLANE = 2, CYL = 3, CONE = 4, PARA = 5, ELL = 6};
 enum {OBJ = 1, LIGHT = 2, CAM = 3};
 enum {NORMAL = 1, SPOT = 2, POINT = 3};
+enum {TILE = 1, PERL = 2, MAP = 3};
+
+typedef struct		s_vecti
+{
+	int				x;
+	int				y;
+	int				z;
+}					t_vecti;
 
 typedef struct		s_vect
 {
@@ -59,6 +67,7 @@ typedef struct		s_color
 	int				red;
 	int				green;
 	int				blue;
+	int				w;
 }					t_color;
 
 typedef struct		s_cam
@@ -82,6 +91,8 @@ typedef struct		s_obj
 	t_color			color;
 	int				angle;
 	t_vect			dir;
+	t_color			tile;
+	int				tex;
 }					t_obj;
 
 typedef struct		s_tmp
@@ -96,6 +107,8 @@ typedef struct		s_tmp
 	int				i;
 	double			darkness;
     double          power;
+	t_color			tile;
+	int				tex;
 }					t_tmp;
 
 typedef struct		s_light
@@ -218,5 +231,8 @@ void				ft_calc_angles(t_env *env);
 void				ft_shadow(t_env *env);
 void				ft_check_light_types(t_env *env);
 void				ft_check_error_obj(t_env *env);
+void				ft_parse_tiles(t_env *env, int i);
+Uint32				ft_chose_color(t_env *env);
+t_vect				ft_calc_sol(t_env *env);
 
 #endif

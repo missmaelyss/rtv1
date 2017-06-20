@@ -6,7 +6,7 @@
 /*   By: ghubert <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/14 17:58:47 by ghubert           #+#    #+#             */
-/*   Updated: 2017/06/19 14:07:34 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/20 13:38:58 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ft_browse_pixels(t_env *env)
 {
+	Uint32	color;
+
 	ft_init_start(env);
 	SDL_LockTexture(env->sdl.draw, NULL, &env->sdl.tmp, &env->sdl.pitch);
 	env->sdl.pixels = env->sdl.tmp;
@@ -29,11 +31,14 @@ void	ft_browse_pixels(t_env *env)
 			{
 				ft_light(env);
 				ft_shadow(env);
+				color = ft_chose_color(env);
 				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
+					color;
+				/*env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
 				SDL_MapRGBA(env->sdl.format, env->tmp.current->color.red * \
 				env->light->power * env->tmp.darkness, env->tmp.current->color.green * \
 				env->light->power * env->tmp.darkness, env->tmp.current->color.blue * \
-				env->light->power * env->tmp.darkness, 255);
+				env->light->power * env->tmp.darkness, 255);*/
 			}
 			env->sdl.pos.x++;
 		}

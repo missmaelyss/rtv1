@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/30 17:42:29 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/19 14:20:20 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/20 14:08:38 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int		main(int ac, char **av)
 		ft_calc_angles(&env);
 	/*	while (env.obj)
 		{
+			printf("obj %d type :%d\n", i, env.obj->type);
+			printf("obj %d tex :%d\n", i, env.obj->tex);
 			printf("obj %d radius :%d\n", i, env.obj->radius);
 			printf("obj %d pos x %f y %f z %f\n", i, env.obj->pos.x, \
 					env.obj->pos.y, env.obj->pos.z);
@@ -33,6 +35,9 @@ int		main(int ac, char **av)
 			printf("obj %d angle %d\n", i, env.obj->angle);
 			printf("obj %d color red %d green %d blue %d\n", i, \
 			env.obj->color.red, env.obj->color.green, env.obj->color.blue);
+			printf("obj %d tile red %d green %d blue %d, w %d\n", i, \
+			env.obj->tile.red, env.obj->tile.green, env.obj->tile.blue, \
+			env.obj->tile.w);
 			i++;
 			env.obj = env.obj->next;
 		}*/
@@ -66,7 +71,7 @@ int		main(int ac, char **av)
                     env.cam.dir = ft_vect_rot(env.cam.dir, -1, 3);
                 if (env.sdl.event.key.keysym.sym == 1073741915)
                     env.cam.dir = ft_vect_rot(env.cam.dir, 1, 3);
-                ft_display(&env);
+			//	ft_display(&env);
             }
 		}
 		SDL_DestroyRenderer(env.sdl.rend);

@@ -53,19 +53,10 @@ void	ft_check_types(t_env *env)
 
 void	ft_check_light_types(t_env *env)
 {
-	if (ft_strequ(env->parse.split[0], "normal"))
-	{
-		env->parse.lights++;
+	if (ft_strequ(env->parse.split[0], "basic"))
 		env->parse.type_light = NORMAL;
-	}
 	else if (ft_strequ(env->parse.split[0], "spotlight"))
-	{
-		env->parse.lights++;
 		env->parse.type_light = SPOT;
-	}
 	else if (ft_strequ(env->parse.split[0], "pointlight"))
-	{
-		env->parse.lights++;
 		env->parse.type_light = POINT;
-	}
 }

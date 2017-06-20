@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 14:25:36 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/15 16:14:39 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/19 17:12:38 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ void	ft_init_tmp(t_env *env)
 	env->tmp.color.red = 0;
 	env->tmp.color.green = 0;
 	env->tmp.color.blue = 0;
+	env->tmp.tile.red = 0;
+	env->tmp.tile.green = 0;
+	env->tmp.tile.blue = 0;
+	env->tmp.tile.w = 0;
+	env->tmp.tex = 0;
 	env->tmp.angle = 0;
 }
 
