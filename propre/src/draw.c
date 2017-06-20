@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/14 17:29:34 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/20 16:51:32 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/20 17:13:26 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ Uint32	ft_chose_color(t_env *env)
 	if (env->tmp.current->tex == TILE)
 	{
 		sol = ft_calc_sol(env);
-		tmp.x = (int)(sol.x / env->tmp.current->tile.w);	
-		tmp.y = (int)(sol.y / env->tmp.current->tile.w);	
-		tmp.z = (int)(sol.z / env->tmp.current->tile.w);
+		tmp.x = (int)(floor(sol.x / env->tmp.current->tile.w));	
+		tmp.y = (int)(floor(sol.y / env->tmp.current->tile.w));	
+		tmp.z = (int)(floor(sol.z / env->tmp.current->tile.w));
 		if (tmp.z % 2 == 0)
 		{
 			if ((tmp.x % 2 == 0 && tmp.y % 2 == 0) || (tmp.x % 2 != 0 && tmp.y \
