@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/30 13:08:14 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/21 13:22:50 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/21 14:04:22 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_light	*ft_fill_light(t_env *env)
 	light = NULL;
 	if ((light = (t_light *)malloc(sizeof(t_light))) == NULL)
 		ft_error();
+	light->type = env->parse.type_light;
 	light->pos.x = env->tmp.pos.x;
 	light->pos.y = env->tmp.pos.y;
 	light->pos.z = env->tmp.pos.z;

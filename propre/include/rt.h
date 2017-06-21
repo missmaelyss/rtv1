@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 11:00:36 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/21 13:23:57 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/21 14:04:14 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 
 enum {SPHERE = 1, PLANE = 2, CYL = 3, CONE = 4, PARA = 5, ELL = 6};
 enum {OBJ = 1, LIGHT = 2, CAM = 3};
-enum {NORMAL = 1, SPOT = 2, POINT = 3};
+enum {BASIC = 1, SPOT = 2, POINT = 3};
 enum {TILE = 1, PERL = 2, MAP = 3};
 
 typedef struct		s_vecti
@@ -117,6 +117,7 @@ typedef struct		s_light
 {
     struct s_light	*next;
     struct s_light	*prev;
+	int				type;
     t_vect          pos;
 	t_vect          solution_point;
 	t_vect          normal_vect;
