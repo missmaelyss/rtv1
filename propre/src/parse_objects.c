@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 11:13:20 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/20 13:25:53 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/21 13:24:02 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ void	ft_parse_objects(t_env *env)
 		env->tmp.tex = TILE;
 		ft_parse_tiles(env, i);
 	}
+	else if (ft_strequ(env->parse.split[0], "reflexion") && 2 <= \
+			env->parse.tablen)
+		env->tmp.ref = ft_atoi(env->parse.split[2]);
 }
 
 void	ft_parse_tiles(t_env *env, int i)

@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/30 13:08:14 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/20 13:25:40 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/21 13:22:50 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_obj	*ft_fill_obj(t_env *env)
 	obj->tile.green = env->tmp.tile.green;
 	obj->tile.blue = env->tmp.tile.blue;
 	obj->tile.w = env->tmp.tile.w;
+	obj->ref = env->tmp.ref;
 	obj->next = NULL;
 	obj->prev = env->tmp_obj;
 	return (obj);

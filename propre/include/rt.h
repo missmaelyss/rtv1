@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 11:00:36 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/20 15:49:37 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/21 13:23:57 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct		s_obj
 	t_vect			dir;
 	t_color			tile;
 	int				tex;
+	int				ref;
 }					t_obj;
 
 typedef struct		s_tmp
@@ -109,6 +110,7 @@ typedef struct		s_tmp
     double          power;
 	t_color			tile;
 	int				tex;
+	int				ref;
 }					t_tmp;
 
 typedef struct		s_light
