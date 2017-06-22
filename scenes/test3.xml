@@ -21,7 +21,7 @@
 </objects>
 
 <light>
-	<normal>
-		<position x = "150" y = "600" z = "200" />
-	</normal>
+	<basic>
+		<position x = "0" y = "0" z = "200" />
+	</basic>
 </light>

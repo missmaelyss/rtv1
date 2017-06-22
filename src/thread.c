@@ -6,7 +6,7 @@
 /*   By: ghubert <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/14 17:58:47 by ghubert           #+#    #+#             */
-/*   Updated: 2017/06/20 13:38:58 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/22 17:23:06 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,39 @@ void	ft_browse_pixels(t_env *env)
 		while (env->sdl.pos.x < WIDTH)
 		{
 			ft_init_pixel(env);
-			ft_browse_list(env, env->cam.pixel, env->cam.pos);
+			env->tmp.ray_pos = env->cam.pos;
+			env->tmp.ray_dir = env->cam.pixel;
+			ft_browse_list(env);
 			if (env->tmp.solution >= 0)
 			{
+				env->tmp.reflexion = env->tmp.current;
+				env->tmp.color = env->tmp.current->color;
 				ft_light(env);
 				ft_shadow(env);
+				env->tmp.old_darkness = env->tmp.reflexion->darkness;
+				env->tmp.old_power = env->tmp.reflexion->power;
+				env->tmp.ray_pos = env->cam.pos;
+				env->tmp.ray_dir = env->cam.pixel;
+				ft_browse_list(env);
+				ft_reflexion(env);
+				ft_light(env);
+				ft_shadow(env);
+				env->tmp.reflexion->power = (env->tmp.old_power*3 + env->tmp.reflexion->power) / 4;
+				env->tmp.reflexion->darkness = (env->tmp.old_darkness*3 + env->tmp.reflexion->darkness) / 4;
 				color = ft_chose_color(env);
-				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
-					color;
 				/*env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
-				SDL_MapRGBA(env->sdl.format, env->tmp.current->color.red * \
-				env->light->power * env->tmp.darkness, env->tmp.current->color.green * \
-				env->light->power * env->tmp.darkness, env->tmp.current->color.blue * \
-				env->light->power * env->tmp.darkness, 255);*/
+					color;*/
+				//env->tmp.reflexion->darkness = 1;
+				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
+				SDL_MapRGBA(env->sdl.format, env->tmp.color.red * \
+				(env->tmp.reflexion->power) * \
+			   	(env->tmp.reflexion->darkness), \
+				env->tmp.color.green * \
+				(env->tmp.reflexion->power) * \
+				(env->tmp.reflexion->darkness), \
+				env->tmp.color.blue * \
+				(env->tmp.reflexion->power) * \
+				(env->tmp.reflexion->darkness), 255);
 			}
 			env->sdl.pos.x++;
 		}
@@ -46,7 +66,7 @@ void	ft_browse_pixels(t_env *env)
 	}
 	SDL_UnlockTexture(env->sdl.draw);
 }
-
+/*
 int		thread_1(void *env_1)
 {
 	t_env *env;
@@ -67,12 +87,12 @@ int		thread_1(void *env_1)
 			{
 				ft_light(env);
 				ft_shadow(env);
-				//env->light->power = 1;
+				//env->tmp.reflexion->power = 1;
 				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
 				SDL_MapRGBA(env->sdl.format, env->tmp.current->color.red * \
-				env->light->power, env->tmp.current->color.green * \
-				env->light->power, env->tmp.current->color.blue * \
-				env->light->power, 255);
+				env->tmp.reflexion->power, env->tmp.current->color.green * \
+				env->tmp.reflexion->power, env->tmp.current->color.blue * \
+				env->tmp.reflexion->power, 255);
 			}
 			env->sdl.pos.x++;
 		}
@@ -98,12 +118,12 @@ int		thread_2(void *env_1)
 			{
 				ft_light(env);
 				ft_shadow(env);
-				//env->light->power = 1;
+				//env->tmp.reflexion->power = 1;
 				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
 				SDL_MapRGBA(env->sdl.format, env->tmp.current->color.red * \
-				env->light->power, env->tmp.current->color.green * \
-				env->light->power, env->tmp.current->color.blue * \
-				env->light->power, 255);
+				env->tmp.reflexion->power, env->tmp.current->color.green * \
+				env->tmp.reflexion->power, env->tmp.current->color.blue * \
+				env->tmp.reflexion->power, 255);
 			}
 			env->sdl.pos.x++;
 		}
@@ -129,12 +149,12 @@ int		thread_3(void *env_1)
 			{
 				ft_light(env);
 				ft_shadow(env);
-				//env->light->power = 1;
+				//env->tmp.reflexion->power = 1;
 				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
 				SDL_MapRGBA(env->sdl.format, env->tmp.current->color.red * \
-				env->light->power, env->tmp.current->color.green * \
-				env->light->power, env->tmp.current->color.blue * \
-				env->light->power, 255);
+				env->tmp.reflexion->power, env->tmp.current->color.green * \
+				env->tmp.reflexion->power, env->tmp.current->color.blue * \
+				env->tmp.reflexion->power, 255);
 			}
 			env->sdl.pos.x++;
 		}
@@ -160,12 +180,12 @@ int		thread_4(void *env_1)
 			{
 				ft_light(env);
 				ft_shadow(env);
-				//env->light->power = 1;
+				//env->tmp.reflexion->power = 1;
 				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTH)] = \
 				SDL_MapRGBA(env->sdl.format, env->tmp.current->color.red * \
-				env->light->power, env->tmp.current->color.green * \
-				env->light->power, env->tmp.current->color.blue * \
-				env->light->power, 255);
+				env->tmp.reflexion->power, env->tmp.current->color.green * \
+				env->tmp.reflexion->power, env->tmp.current->color.blue * \
+				env->tmp.reflexion->power, 255);
 			}
 			env->sdl.pos.x++;
 		}
@@ -192,4 +212,4 @@ void	ft_thread(t_env *env)
 	SDL_WaitThread(env->thread.t_3, &ret);
 	env->thread.t_4 = SDL_CreateThread(thread_4, "T4", (void *)env);
 	SDL_WaitThread(env->thread.t_4, &ret);
-}
+}*/

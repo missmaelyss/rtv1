@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 11:00:36 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/21 14:04:14 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/22 17:24:25 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 # include <get_next_line.h>
 # include <SDL_thread.h>
 # include <SDL.h>
-# define WIDTH 640
-# define HEIGHT 480
+# define WIDTH 1000
+# define HEIGHT 700
 # define VIEWPLANED 1
-# define VIEWPLANEW 0.64
-# define VIEWPLANEH 0.48
+# define VIEWPLANEW 1
+# define VIEWPLANEH 0.7
 # define F 1
 # define XINDENT VIEWPLANEW / (double)WIDTH
 # define YINDENT VIEWPLANEH / (double)HEIGHT
@@ -86,12 +86,16 @@ typedef struct		s_obj
 	struct s_obj	*prev;
 	int				type;
 	int				radius;
+	int				angle;
 	t_vect			pos;
 	t_vect			angles;
 	t_color			color;
-	int				angle;
 	t_vect			dir;
+	t_vect          solution_point;
+	t_vect          normal_vect;
 	t_color			tile;
+	double			darkness;
+    double          power;
 	int				tex;
 	int				ref;
 }					t_obj;
@@ -101,16 +105,20 @@ typedef struct		s_tmp
 	t_vect			pos;
 	t_vect			angles;
 	int				radius;
-	t_color			color;
 	int				angle;
+	t_color			color;
 	double			solution;
-	t_obj			*current;
-	int				i;
-	double			darkness;
-    double          power;
+	double			power;
+	double			old_power;
+	double			old_darkness;
 	t_color			tile;
 	int				tex;
 	int				ref;
+	int				i;
+	t_vect			ray_pos;
+	t_vect			ray_dir;
+	t_obj			*current;
+	t_obj			*reflexion;
 }					t_tmp;
 
 typedef struct		s_light
@@ -119,11 +127,8 @@ typedef struct		s_light
     struct s_light	*prev;
 	int				type;
     t_vect          pos;
-	t_vect          solution_point;
-	t_vect          normal_vect;
 	t_vect          light_vect;
 	double          norme;
-    double          power;
 	t_vect          dir;
 	t_color			color;
 }					t_light;
@@ -217,17 +222,17 @@ double				ft_scalar(t_vect vec1, t_vect vec2);
 t_vect				ft_vect_op(t_vect vec1, char c, t_vect vec2);
 t_vect				ft_vect_op2(double tmp, char c, t_vect vec);
 void				ft_thread(t_env *env);
-void				ft_browse_list(t_env *env, t_vect ray_dir, t_vect ray_pos);
+void				ft_browse_list(t_env *env);
 void				ft_init_start(t_env *env);
 void				ft_display(t_env *env);
 void				ft_init_pixel(t_env *env);
 void                ft_light(t_env *env);
 void                ft_normal_vect(t_env *env);
 void                ft_normal_sphere(t_env *env);
-void				ft_calc_plane(t_env *env, t_vect ray_dir, t_vect ray_pos);
-void				ft_calc_sphere(t_env *env, t_vect ray_dir, t_vect ray_pos);
-void				ft_calc_cone(t_env *env, t_vect ray_dir, t_vect ray_pos);
-void				ft_calc_cyl(t_env *env, t_vect ray_dir, t_vect ray_pos);
+void				ft_calc_plane(t_env *env);
+void				ft_calc_sphere(t_env *env);
+void				ft_calc_cone(t_env *env);
+void				ft_calc_cyl(t_env *env);
 t_vect				ft_vect_rot(t_vect d, double angle, int axe);
 void				ft_browse_pixels(t_env *env);
 void				ft_calc_angles(t_env *env);

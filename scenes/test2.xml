@@ -33,7 +33,7 @@
 </objects>
 
 <light>
-	<normal>
+	<basic>
 		<position x = "150" y = "451" z = "200" />
-	</normal>
+	</basic>
 </light>

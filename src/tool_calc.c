@@ -16,8 +16,8 @@ t_vect	ft_calc_sol(t_env *env)
 {
 	t_vect	sol;
 
-	sol.x = env->cam.pos.x + env->cam.pixel.x * env->tmp.solution;
-	sol.y = env->cam.pos.y + env->cam.pixel.y * env->tmp.solution;
-	sol.z = env->cam.pos.z + env->cam.pixel.z * env->tmp.solution;
+	sol.x = env->tmp.ray_pos.x + env->tmp.ray_dir.x * env->tmp.solution;
+	sol.y = env->tmp.ray_pos.y + env->tmp.ray_dir.y * env->tmp.solution;
+	sol.z = env->tmp.ray_pos.z + env->tmp.ray_dir.z * env->tmp.solution;
 	return (sol);
 }

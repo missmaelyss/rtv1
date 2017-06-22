@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/14 17:29:34 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/20 17:13:26 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/06/21 17:49:19 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,18 @@ Uint32	ft_chose_color(t_env *env)
 	t_vect	sol;
 	Uint32	color[2];
 
-	color[0] = SDL_MapRGBA(env->sdl.format, env->tmp.current->color.red * \
-				env->light->power * env->tmp.darkness, env->tmp.current->color.\
-				green * env->light->power * env->tmp.darkness, \
-				env->tmp.current->color.blue * env->light->power * \
-				env->tmp.darkness, 255);
-	color[1] = SDL_MapRGBA(env->sdl.format, env->tmp.current->tile.red * \
-				env->light->power * env->tmp.darkness, env->tmp.current->tile.\
-				green * env->light->power * env->tmp.darkness, \
-				env->tmp.current->tile.blue * env->light->power * \
-				env->tmp.darkness, 255);
+	color[0] = SDL_MapRGBA(env->sdl.format, env->tmp.color.red * \
+				env->tmp.reflexion->power * env->tmp.reflexion->darkness, \
+				env->tmp.color.\
+				green * env->tmp.reflexion->power * env->tmp.reflexion->darkness, \
+				env->tmp.color.blue * env->tmp.reflexion->power * \
+				env->tmp.reflexion->darkness, 255);
+	color[1] = SDL_MapRGBA(env->sdl.format, env->tmp.reflexion->tile.red * \
+				env->tmp.reflexion->power * env->tmp.reflexion->darkness, \
+				env->tmp.reflexion->tile.\
+				green * env->tmp.reflexion->power * env->tmp.reflexion->darkness, \
+				env->tmp.reflexion->tile.blue * env->tmp.reflexion->power * \
+				env->tmp.reflexion->darkness, 255);
 	if (env->tmp.current->tex == TILE)
 	{
 		sol = ft_calc_sol(env);
