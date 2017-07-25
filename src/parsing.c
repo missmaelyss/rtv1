@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/30 13:06:40 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/21 16:22:58 by marnaud          ###   ########.fr       */
+/*   Updated: 2017/07/24 16:26:44 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ft_parse(t_env *env, char *av)
 		ft_tabdel(&env->parse.split);
 		ft_strdel(&env->parse.line);
 	}
+	ft_strdel(&env->parse.line);
 	if (env->parse.cam == 0)
 		ft_error();
 	if (close(env->parse.fd) == -1)
@@ -84,6 +85,20 @@ void	ft_parse_color(t_env *env, int i)
 		if (ft_strequ(env->parse.split[i], "green") && (i + 2) \
 				<= env->parse.tablen)
 			env->tmp.color.green = ft_atoi(env->parse.split[i + 2]);
+		i++;
+	}
+}
+
+void	ft_parse_finished(t_env *env, int i)
+{
+	while (env->parse.split[i])
+	{
+		if (ft_strequ(env->parse.split[i], "min") && (i + 2) <= \
+				env->parse.tablen)
+			env->tmp.fin[0] = ft_atoi(env->parse.split[i + 2]);
+		if (ft_strequ(env->parse.split[i], "max") && (i + 2) <= \
+				env->parse.tablen)
+			env->tmp.fin[1] = ft_atoi(env->parse.split[i + 2]);
 		i++;
 	}
 }

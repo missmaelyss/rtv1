@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 12:30:02 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/12 11:47:08 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/07/24 11:44:08 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ void	ft_pos_cam(t_env *env, int i)
 		if (ft_strequ(env->parse.split[i], "x") == 1 && (i + 2) \
 				<= env->parse.tablen)
 			env->cam.pos.x = \
-						ft_atoi(env->parse.split[i + 2]);
+						(double)(ft_atoi(env->parse.split[i + 2])) / 400;
 		if (ft_strequ(env->parse.split[i], "y") == 1 && (i + 2) \
 				<= env->parse.tablen)
 			env->cam.pos.y = \
-						ft_atoi(env->parse.split[i + 2]);
+						(double)(ft_atoi(env->parse.split[i + 2])) / 400;
 		if (ft_strequ(env->parse.split[i], "z") == 1 && (i + 2) \
 				<= env->parse.tablen)
 			env->cam.pos.z = \
-						ft_atoi(env->parse.split[i + 2]);
+						(double)(ft_atoi(env->parse.split[i + 2])) / 400;
 	}
 }

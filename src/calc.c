@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 14:45:14 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/15 14:25:32 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/07/25 14:52:17 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,12 @@ t_vect	ft_vect_op2(double tmp, char c, t_vect vec)
 		res.y = vec.y * tmp;
 		res.z = vec.z * tmp;
 	}
+	else if (c == '/')
+	{
+		res.x = vec.x / tmp;
+		res.y = vec.y / tmp;
+		res.z = vec.z / tmp;
+	}
 	return (res);
 }
 
@@ -81,5 +87,15 @@ t_vect	ft_vect_rot(t_vect d, double angle, int axe)
 		r.y = cos(angle * (M_PI / 180)) * d.y - sin(angle * (M_PI / 180)) * d.z;
 		r.z = sin(angle * (M_PI / 180)) * d.y + cos(angle * (M_PI / 180)) * d.z;
 	}
+	return (r);
+}
+
+t_vect	ft_vect_prod(t_vect vec1, t_vect vec2)
+{
+	t_vect	r;
+
+	r.x = vec1.y * vec2.z - vec1.z * vec2.y;
+	r.y = vec1.z * vec2.x - vec1.x * vec2.z;
+	r.z = vec1.x * vec2.y - vec1.y * vec2.x;
 	return (r);
 }

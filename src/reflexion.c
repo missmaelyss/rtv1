@@ -6,50 +6,48 @@
 /*   By: marnaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/19 15:28:59 by marnaud           #+#    #+#             */
-/*   Updated: 2017/06/22 15:47:11 by marnaud          ###   ########.fr       */
+/*   Updated: 2017/07/25 21:36:17 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 
-static void	ft_new_color(t_env *env, t_obj *tmp)
+static void	ft_new_color(t_env *env, int refle_lvl)
 {
 	double	i;
+	t_color	color;
 
-	i = (env->tmp.solution < 0) ? 2 : 1 + (env->tmp.solution / 100) * 1;
-	i = 2;
-	env->tmp.color.red = (tmp->color.red + env->tmp.current->color.red * i) / (1 + i);
-	env->tmp.color.green = (tmp->color.green + env->tmp.current->color.green * i) / (1 + i);
-	env->tmp.color.blue = (tmp->color.blue + env->tmp.current->color.blue * i) / (1 + i);
+	if (env->tmp.solution > 0)
+	{
+		color = ft_chose_color(env);
+	i = (env->tmp.solution < 1) ? 1 : (1 / env->tmp.solution);
+	env->tmp.color.red = (env->tmp.color.red * (1.01 - refle_lvl)\
+		+ color.red * i) / (1.01 - refle_lvl + i);
+	env->tmp.color.green = (env->tmp.color.green * (1.01 - refle_lvl)\
+		+ color.green * i) / (1.01 - refle_lvl + i);
+	env->tmp.color.blue = (env->tmp.color.blue * (1.01 - refle_lvl)\
+		+ color.blue * i) / (1.01 - refle_lvl + i);
+	}
 }
 
-void	ft_reflexion(t_env *env)
+void		ft_reflexion(t_env *env)
 {
-	int		i;
-	t_obj	*tmp;
-
-	i = 0;
-	tmp = env->tmp.current;
-	env->tmp.ray_pos = ft_calc_sol(env);
+	env->tmp.refle_lvl = env->tmp.current->refle;
+	env->cam.pos = ft_calc_sol(env);
 	ft_normal_vect(env);
-	env->tmp.ray_dir = env->tmp.reflexion->normal_vect;
-	while (i < 2 && env->tmp.solution > 0)
+	if (env->tmp.nb_refle < 1 && env->tmp.solution > 0)
 	{
-		if (i > 0)
+		if (env->tmp.nb_refle > 0)
 		{
-			env->tmp.ray_pos = ft_calc_sol(env);
+			env->cam.pos = ft_calc_sol(env);
 			ft_normal_vect(env);
-			env->tmp.ray_dir = ft_vect_op(env->tmp.ray_dir, '-', ft_vect_op2(2 * ft_scalar(\
-				env->tmp.reflexion->normal_vect, env->tmp.ray_dir), '*', \
-					env->tmp.reflexion->normal_vect));
-			printf("%f %f %f\n",	env->tmp.reflexion->normal_vect.x, 	env->tmp.reflexion->normal_vect.y, 	env->tmp.reflexion->normal_vect.z );
+			env->cam.pixel = ft_vect_op(env->cam.pixel, '-',\
+			ft_vect_op2(2 * ft_scalar(env->light->normal_vect,\
+			env->cam.pixel), '*', env->light->normal_vect));
 		}
 		env->tmp.solution = 0;
-		ft_browse_list(env);
-		//env->tmp.reflexion = env->tmp.current;
-		i++;
+		ft_browse_list(env, env->cam.pixel, env->cam.pos);
+		(env->tmp.nb_refle)++;
 	}
-	ft_new_color(env, tmp);
-	//env->tmp.current = tmp;
-	//ft_light(env, ray_dir, ray_pos);
+	ft_new_color(env, env->tmp.refle_lvl / 100);
 }

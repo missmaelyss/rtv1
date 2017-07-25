@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/19 14:28:09 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/06/19 15:42:40 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/07/25 11:02:56 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,11 @@ void	ft_check_error_obj(t_env *env)
 void	ft_end_lights(t_env *env)
 {
 	if ((ft_strequ(env->parse.split[0], "/basic") || \
-			ft_strequ(env->parse.split[0], "/spotlight") || \
-			ft_strequ(env->parse.split[0], "/pointlight")) && \
+			ft_strequ(env->parse.split[0], "/spotlight")) && \
 			env->parse.type == LIGHT)
 	{
-		if ((!env->check.direction && (env->parse.type_light == SPOT || \
-				env->parse.type_light == POINT)) || !env->check.position)
+		if ((!env->check.direction && (env->parse.type_light == SPOT)) || \
+				!env->check.position)
 			ft_error();
 		ft_init_check(env);
 		if (env->light == NULL)

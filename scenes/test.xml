@@ -7,27 +7,20 @@
 	<cylinder>
 		<radius = "30" />
 		<position x = "0" y = "200" z = "0" />
+		<tiles red = "255" green = "9" blue = "248" w = "6" />
 		<angles x = "0" y = "0" z = "0" />
 		<color red = "255" green = "0" blue = "150" />
+		<finished min = "50" max = "200" />
 	</cylinder>
 	<plane>
 		<angles x = "0" y = "0" z = "0" h = "1" />
-		<color red = "40" green = "51" blue = "100" />
+		<tiles red = "0" green = "0" blue = "0" w = "2" />
+		<color red = "255" green = "255" blue = "255" />
 	</plane>
-	<parabole>
-		<angles x = "20" y = "22" z = "23" h = "66" />
-		<position x = "55" y = "56" z = "57" />
-		<color red = "10" green = "12" blue = "15" />
-	</parabole>
-	<ellipse>
-		<angles x = "30" y = "32" z = "33" h = "36" />
-		<position x = "75" y = "76" z = "77" />
-		<color red = "60" green = "62" blue = "65" />
-	</ellipse>
 </objects>
 
 <light>
-	<normal>
-		<position x = "150" y = "150" z = "200" />
-	</normal>
+	<basic>
+		<position x = "-100" y = "10" z = "500" />
+	</basic>
 </light>

@@ -13,17 +13,40 @@
 void	ft_check_obj_types(t_env *env)
 {
 	if (ft_strequ(env->parse.split[0], "sphere") == 1)
+	{
 		env->parse.type_obj = SPHERE;
+		env->parse.objects++;
+	}
 	else if (ft_strequ(env->parse.split[0], "plane") == 1)
+	{
 		env->parse.type_obj = PLANE;
+		env->parse.objects++;
+	}
 	else if (ft_strequ(env->parse.split[0], "cylinder") == 1)
+	{
 		env->parse.type_obj = CYL;
-	else if (ft_strequ(env->parse.split[0], "cone") == 1)
+		env->parse.objects++;
+	}
+	ft_check_obj_types2(env);
+}
+
+void	ft_check_obj_types2(t_env *env)
+{
+	if (ft_strequ(env->parse.split[0], "cone") == 1)
+	{
 		env->parse.type_obj = CONE;
+		env->parse.objects++;
+	}
 	else if (ft_strequ(env->parse.split[0], "parabole"))
+	{
 		env->parse.type_obj = PARA;
+		env->parse.objects++;
+	}
 	else if (ft_strequ(env->parse.split[0], "ellipse"))
+	{
 		env->parse.type_obj = ELL;
+		env->parse.objects++;
+	}
 }
 
 void	ft_check_types(t_env *env)
@@ -54,9 +77,13 @@ void	ft_check_types(t_env *env)
 void	ft_check_light_types(t_env *env)
 {
 	if (ft_strequ(env->parse.split[0], "basic"))
+	{
 		env->parse.type_light = BASIC;
+		env->parse.lights++;
+	}
 	else if (ft_strequ(env->parse.split[0], "spotlight"))
+	{
 		env->parse.type_light = SPOT;
-	else if (ft_strequ(env->parse.split[0], "pointlight"))
-		env->parse.type_light = POINT;
+		env->parse.lights++;
+	}
 }
