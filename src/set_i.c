@@ -6,27 +6,24 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/22 14:59:00 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/07/25 15:01:11 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/07/26 12:33:15 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 
-void	ft_interface(t_env *env)
+static void	ft_text_cases_interface(t_env *env, int text)
 {
-	if ((env->sdl.tset[TINTER] = SDL_CreateTexture(env->sdl.rend, \
-			SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, WIDTHS, \
-			HEIGHT)) == NULL)
-		ft_error_sdl();
-	SDL_SetRenderTarget(env->sdl.rend, env->sdl.tset[TINTER]);
-	env->sdl.tset[TIMG] = ft_img_to_tex(env, "img/interface.bmp");
-	SDL_RenderCopy(env->sdl.rend, env->sdl.tset[TIMG], NULL, NULL);
-	SDL_DestroyTexture(env->sdl.tset[TIMG]);
-	ft_text_interface(env, 1);
-	SDL_SetRenderTarget(env->sdl.rend, NULL);
+	if (text == 1)
+	{
+		if ((env->sdl.text = TTF_RenderText_Blended(env->sdl.font[0], \
+				"Objects", env->set.color[(env->set.select == 1) ? 1 : 0]))\
+				== NULL)
+			ft_error_sdl();
+	}
 }
 
-void	ft_text_interface(t_env *env, int text)
+static void	ft_text_interface(t_env *env, int text)
 {
 	ft_text_cases_interface(env, text);
 	if ((env->sdl.tset[TTEXT] = SDL_CreateTextureFromSurface(env->sdl.rend, \
@@ -41,26 +38,27 @@ void	ft_text_interface(t_env *env, int text)
 		&env->sdl.rset[DTEXT]);
 }
 
-void	ft_text_cases_interface(t_env *env, int text)
+void		ft_interface(t_env *env)
 {
-	if (text == 1)
-	{
-		if ((env->sdl.text = TTF_RenderText_Blended(env->sdl.font, \
-				"Objects", env->set.color[(env->set.select == 1) ? 1 : 0]))\
-				== NULL)
-			ft_error_sdl();
-	}
+	if ((env->sdl.tset[TINTER] = SDL_CreateTexture(env->sdl.rend, \
+			SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, WIDTHS, \
+			HEIGHT)) == NULL)
+		ft_error_sdl();
+	SDL_SetRenderTarget(env->sdl.rend, env->sdl.tset[TINTER]);
+	env->sdl.tset[TIMG] = ft_img_to_tex(env, "img/interface.bmp");
+	SDL_RenderCopy(env->sdl.rend, env->sdl.tset[TIMG], NULL, NULL);
+	SDL_DestroyTexture(env->sdl.tset[TIMG]);
+	ft_text_interface(env, 1);
+	SDL_SetRenderTarget(env->sdl.rend, NULL);
 }
 
-void	ft_ev_inter(t_env *env)
+void		ft_ev_inter(t_env *env)
 {
 	if (env->sdl.event.key.keysym.sym == SDLK_RETURN)
 	{
 		env->set.tab = OBJECTS;
 		env->set.select = 1;
 		env->set.pos = 0;
-		if ((env->sdl.font = TTF_OpenFont("fonts/bodoni.ttf", 30)) == NULL)
-			ft_error_sdl();
 		SDL_DestroyTexture(env->sdl.tset[TINTER]);
 	}
 }

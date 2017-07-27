@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/14 17:29:34 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/07/25 21:29:32 by marnaud          ###   ########.fr       */
+/*   Updated: 2017/07/27 16:16:34 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	ft_display(t_env *env)
 {
 	SDL_SetRenderDrawColor(env->sdl.rend, 255, 255, 255, 255);
 	SDL_RenderClear(env->sdl.rend);
-	//ft_thread(env);
 	env->sdl.rt.x = 0;
 	env->sdl.rt.y = 0;
 	env->sdl.rt.w = WIDTHR;
@@ -32,30 +31,37 @@ void	ft_display(t_env *env)
 	SDL_RenderPresent(env->sdl.rend);
 }
 
-void	ft_option_visu(t_env *env)
+/*void	ft_option_visu(t_env *env)
 {
-	if (env->tmp.current->refle > 0)
+	if (env->tmp.current->refle > 0 || env->tmp.current->type == 1)
 	{
-		ft_refraction(env);
-		if (env->tmp.solution > 0 && env->tmp.nb_refle < 5)
-			ft_option_visu(env);
+//		printf("1");
+		ft_reflexion(env);
+	//	if (env->tmp.solution > 0 && env->tmp.nb_refle < 5)
+	//		ft_option_visu(env);
 	}
-	if (env->tmp.current->refra < 100)
+	if (env->tmp.current->refra < 100 && env->tmp.current->refra > 0)
 	{
-		ft_refraction(env);
-		if (env->tmp.solution > 0 && env->tmp.nb_refle < 5)
-			ft_option_visu(env);
+		printf("2");
+	//	ft_refraction(env);
+	//	if (env->tmp.solution > 0 && env->tmp.nb_refle < 5)
+	//		ft_option_visu(env);
 	}
-	if (env->tmp.current->tex != 0)
+*	if (env->tmp.current->tex != 0 && env->tmp.current->type == 1)
+	{
+	//	printf("3");
 		ft_texture(env);
-}
+	}
+}*/
 
 t_color	ft_chose_color(t_env *env)
 {
 	t_color	color;
 
+	ft_place(env);
 	ft_light(env);
 	ft_shadow(env);
+//	env->tmp.darkness= 1;
 	color.red = env->tmp.current->color.red * env->light->power * \
 		env->tmp.darkness;
 	color.green = env->tmp.current->color.green * env->light->power\

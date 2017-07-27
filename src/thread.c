@@ -6,13 +6,27 @@
 /*   By: gauffret <gauffret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 11:47:38 by gauffret          #+#    #+#             */
-/*   Updated: 2017/07/25 21:47:53 by marnaud          ###   ########.fr       */
+/*   Updated: 2017/07/27 18:31:43 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 
-t_env	*ft_init_browse_pixels(t_env *env)
+/*static void	ft_init_texture(t_env *env)
+{
+			env->texture[0] = SDL_LoadBMP("img/moon.bmp");
+			env->texture[1] = SDL_LoadBMP("img/soleil.bmp");
+			env->texture[2] = SDL_LoadBMP("img/damier.bmp");
+}
+
+static void	ft_destroy_texture(t_env *env)
+{
+	SDL_FreeSurface(env->texture[0]);
+	SDL_FreeSurface(env->texture[1]);
+	SDL_FreeSurface(env->texture[2]);
+}
+*/
+t_env		*ft_init_browse_pixels(t_env *env)
 {
 	ft_init_draw(env);
 	ft_init_start(env);
@@ -26,169 +40,70 @@ t_env	*ft_init_browse_pixels(t_env *env)
 	return (env);
 }
 
-int	thread1(void *envt)
+int			thread(void *envt)
 {
-	t_color	color;
-	t_env	*env;
-	int		lock;
-	int x;
-	int y;
+	t_env		*env;
 
 	env = (t_env *)envt;
-	y = 0;
-	lock = 1;
-	while (y < (HEIGHT / 2) + 1)
+	env->sdl.pos.y = env->thread.y_start;
+	while (++env->sdl.pos.y < env->thread.y_end)
 	{
-		x = 0;
-		while (x < (WIDTHR / 2) + 1)
+		env->sdl.pos.x = env->thread.x_start;
+		while (++env->sdl.pos.x < env->thread.x_end)
 		{
-			env->sdl.pos.x = x;
-			env->sdl.pos.y = y;
 			ft_init_pixel(env);
-			ft_browse_list(env, env->cam.pixel, env->cam.pos);
+			ft_browse_list(env, env->cam.pixel, env->cam.pos, 0);
 			if (env->tmp.solution >= 0)
 			{
-				color = ft_chose_color(env);
-			//	ft_option_visu(env);
-				env->sdl.pixels[x + (y * WIDTHR)] = SDL_MapRGBA(env->\
-				sdl.format, color.red, color.green, color.blue, 255);
+				env->tmp.ray_pos = env->cam.pos;
+				env->tmp.ray_dir = env->cam.pixel;
+				env->tmp.color = ft_chose_color(env);
+				if (env->tmp.current->type == SPHERE)
+				//		ft_refraction(env);	
+						ft_reflexion(env);
+				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTHR)] =\
+				SDL_MapRGBA(env->sdl.format, env->tmp.color.red, env->tmp.color.green, env->tmp.color.blue, 255);
 			}
-			lock = 1;
-			x++;
 		}
-		y++;
 	}
 	env->thread.finished = 1;
 	return (1);
 }
 
-int	thread2(void *envt)
+void		init_limits(t_env *env)
 {
-	t_color	color;
-	t_env	*env;
-	int		lock;
-	int x;
-	int y;
-
-	env = (t_env *)envt;
-	y = 0;
-	lock = 1;
-	while (y < (HEIGHT / 2) + 1)
-	{
-		x = (WIDTHR / 2) - 1;
-		while (x < WIDTHR)
-		{
-			env->sdl.pos.x = x;
-			env->sdl.pos.y = y;
-			ft_init_pixel(env);
-			ft_browse_list(env, env->cam.pixel, env->cam.pos);
-			if (env->tmp.solution >= 0)
-			{
-				color = ft_chose_color(env);
-			//	ft_option_visu(env);
-				env->sdl.pixels[x + (y * WIDTHR)] = SDL_MapRGBA(env->\
-				sdl.format, color.red, color.green, color.blue, 255);
-			}
-			lock = 1;
-			x++;
-		}
-		y++;
-	}
-	env->thread.finished = 1;
-	return (1);
-}
-
-int	thread3(void *envt)
-{
-	t_color	color;
-	t_env	*env;
-	int		lock;
-	int x;
-	int y;
-
-	env = (t_env *)envt;
-	y = (HEIGHT / 2) - 1;
-	lock = 1;
-	while (y < HEIGHT)
-	{
-		x = 0;
-		while (x < (WIDTHR / 2) + 1)
-		{
-			env->sdl.pos.x = x;
-			env->sdl.pos.y = y;
-			ft_init_pixel(env);
-			ft_browse_list(env, env->cam.pixel, env->cam.pos);
-			if (env->tmp.solution >= 0)
-			{	
-				color = ft_chose_color(env);
-			//	ft_option_visu(env);
-				env->sdl.pixels[x + (y * WIDTHR)] = SDL_MapRGBA(env->\
-				sdl.format, color.red, color.green, color.blue, 255);
-			}
-			lock = 1;
-			x++;
-		}
-		y++;
-	}
-	env->thread.finished = 1;
-	return (1);
-}
-
-int	thread4(void *envt)
-{
-	t_color	color;
-	t_env	*env;
-	int		lock;
-	int x;
-	int y;
-
-	env = (t_env *)envt;
-	y = HEIGHT / 2 - 1;
-	lock = 1;
-	while (y < HEIGHT)
-	{
-		x = WIDTHR / 2 - 1;
-		while (x < WIDTHR)
-		{
-			env->sdl.pos.x = x;
-			env->sdl.pos.y = y;
-			ft_init_pixel(env);
-			ft_browse_list(env, env->cam.pixel, env->cam.pos);
-			if (env->tmp.solution >= 0)
-			{	
-				color = ft_chose_color(env);
-			//	ft_option_visu(env);
-				env->sdl.pixels[x + (y * WIDTHR)] = SDL_MapRGBA(env->\
-				sdl.format, color.red, color.green, color.blue, 255);
-			}
-			lock = 1;
-			x++;
-		}
-		y++;
-	}
-	env->thread.finished = 1;
-	return (1);
+	env->thread.y_start = ((env->thread.id == 0 || env->thread.id == 1) \
+							? (-1) : (HEIGHT / 2 - 2));
+	env->thread.y_end = ((env->thread.id == 0 || env->thread.id == 1) \
+							? ((HEIGHT / 2) + 1) : (HEIGHT));
+	env->thread.x_start = ((env->thread.id == 0 || env->thread.id == 2) \
+							? (-1) : ((WIDTHR / 2) - 2));
+	env->thread.x_end = ((env->thread.id == 0 || env->thread.id == 2) \
+							? ((WIDTHR / 2) + 1) : (WIDTHR));
 }
 
 void	ft_browse_pixels(t_env *env)
 {
-	t_env	*envt1;
-	t_env	*envt2;
-	t_env	*envt3;
-	t_env	*envt4;
-	
+	t_env	*e[4];
+	int		i;
+
+	i = -1;
 	env = ft_init_browse_pixels(env);
-	envt1 = dup_struct(env, 0);
-	envt2 = dup_struct(env, 1);
-	envt3 = dup_struct(env, 2);
-	envt4 = dup_struct(env, 3);
-	env->thread.t_1 = SDL_CreateThread(thread1, "thread1", envt1);
-	env->thread.t_2 = SDL_CreateThread(thread2, "thread2", envt2);
-	env->thread.t_3 = SDL_CreateThread(thread3, "thread3", envt3);
-	env->thread.t_4 = SDL_CreateThread(thread4, "thread4", envt4);
-	SDL_WaitThread(env->thread.t_1, &envt1->thread.finished);
-	SDL_WaitThread(env->thread.t_2, &envt2->thread.finished);
-	SDL_WaitThread(env->thread.t_3, &envt3->thread.finished);
-	SDL_WaitThread(env->thread.t_4, &envt4->thread.finished);
+	while (++i < 4)
+	{
+		e[i] = dup_struct(env, i);
+		init_limits(e[i]);
+	}
+	env->thread.t[0] = SDL_CreateThread(thread, "thread1", e[0]);
+	env->thread.t[1] = SDL_CreateThread(thread, "thread2", e[1]);
+	env->thread.t[2] = SDL_CreateThread(thread, "thread3", e[2]);
+	env->thread.t[3] = SDL_CreateThread(thread, "thread4", e[3]);
+	SDL_WaitThread(env->thread.t[0], &e[0]->thread.finished);
+	SDL_WaitThread(env->thread.t[1], &e[1]->thread.finished);
+	SDL_WaitThread(env->thread.t[2], &e[2]->thread.finished);
+	SDL_WaitThread(env->thread.t[3], &e[3]->thread.finished);
+	i = -1;
+	while (++i < 4)
+		thread_suppr_dup(e[i]);
 	SDL_UnlockTexture(env->sdl.draw);
 }

@@ -6,7 +6,7 @@
 #    By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 12:54:42 by ele-cren          #+#    #+#              #
-#    Updated: 2017/07/25 21:19:24 by marnaud          ###   ########.fr        #
+#    Updated: 2017/07/26 20:32:37 by marnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,10 @@ SRC = src/check_types.c src/init.c src/main.c src/parse_lights.c \
 	  src/set_a.c src/set_p.c src/set_d.c src/set_c.c src/c_list.c \
 	  src/ev_col.c src/ev_pos.c src/ev_dir.c src/ev_obj.c src/ev_at.c \
 	  src/event_obj.c src/set_b.c src/ev_base.c src/set_eff.c src/ev_eff.c \
-	  src/event_obj2.c src/set_t.c src/ev_t.c src/thread_dup.c \
-	  src/reflexion.c src/refraction.c src/texture.c
+	  src/event_obj2.c  src/thread_dup.c \
+	  src/thread_dup2.c src/thread_suppr_dup.c src/event_cam.c src/free.c \
+	  src/c_list2.c src/calc_again.c src/normal.c src/reflexion.c \
+	  src/refraction.c src/texture.c
 
 OBJ = $(patsubst src/%.c, obj/%.o, $(SRC))
 

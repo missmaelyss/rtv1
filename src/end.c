@@ -39,15 +39,15 @@ void	ft_end_obj(t_env *env)
 
 void	ft_check_error_obj(t_env *env)
 {
-		if ((!env->check.position && !ft_strequ(env->parse.split[0], "/plane"))\
-			|| !env->check.color || \
+	if ((!env->check.position && !ft_strequ(env->parse.split[0], "/plane"))\
+		|| !env->check.color || \
 		((ft_strequ(env->parse.split[0], "/sphere") || \
-		  ft_strequ(env->parse.split[0], "/cylinder")) && \
+		ft_strequ(env->parse.split[0], "/cylinder")) && \
 		!env->check.radius) || (!env->check.direction && \
-		!ft_strequ(env->parse.split[0], "/sphere")) || (!env->check.angle && \
-		ft_strequ(env->parse.split[0], "/cone")))
-			ft_error();
-		ft_init_check(env);
+		!ft_strequ(env->parse.split[0], "/sphere")) || \
+		(!env->check.angle && ft_strequ(env->parse.split[0], "/cone")))
+		ft_error();
+	ft_init_check(env);
 }
 
 void	ft_end_lights(t_env *env)

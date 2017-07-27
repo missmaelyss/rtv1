@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 13:49:36 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/07/19 15:22:49 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/07/26 10:49:44 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_event(t_env *env)
 {
-	void	(*tab[9])(t_env *);
+	void	(*tab[8])(t_env *);
 
 	tab[0] = ft_ev_inter;
 	tab[1] = ft_ev_obj;
@@ -24,7 +24,6 @@ void	ft_event(t_env *env)
 	tab[5] = ft_ev_col;
 	tab[6] = ft_ev_base;
 	tab[7] = ft_ev_eff;
-	tab[8] = ft_ev_tex;
 	tab[env->set.tab](env);
 }
 

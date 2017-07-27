@@ -26,11 +26,6 @@ void	ft_ev_base_rlb(t_env *env)
 			env->set.select == 16) ? env->set.select + 1 : env->set.select - 1;
 	if (env->sdl.event.key.keysym.sym == SDLK_BACKSPACE)
 	{
-		if (env->set.obj[3]->finished == 1)
-		{
-			if ((env->sdl.font = TTF_OpenFont("fonts/bodoni.ttf", 30)) == NULL)
-				ft_error_sdl();
-		}
 		env->set.select = 1;
 		env->set.inc = 1;
 		env->set.tab = ATTRIBUTES;

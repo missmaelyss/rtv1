@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/20 12:08:26 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/07/24 14:51:44 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/07/26 11:27:57 by mawasche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,30 @@ t_vect	ft_normalize(t_vect vect)
 	new.y = vect.y / norme;
 	new.z = vect.z / norme;
 	return (new);
+}
+
+void	ft_replace(t_vect *solution, t_vect pos_obj, t_vect angles)
+{
+	solution->x = solution->x - pos_obj.x;
+	solution->y = solution->y - pos_obj.y;
+	solution->z = solution->z - pos_obj.z;
+	ft_redirect(solution, angles);
+}
+
+void	ft_redirect(t_vect *solution, t_vect angles)
+{
+	*solution = (solution->x != 1 && solution->x != -1) ? \
+		ft_vect_rot(*solution, -angles.x, 3) : \
+		ft_vect_rot(*solution, -angles.x, 1);
+	*solution = ft_vect_rot(*solution, -angles.y, 2);
+	*solution = ft_vect_rot(*solution, -angles.z, 1);
+}
+
+void	ft_direct(t_vect *solution, t_vect angles)
+{
+	*solution = ft_vect_rot(*solution, angles.z, 1);
+	*solution = ft_vect_rot(*solution, angles.y, 2);
+	*solution = (solution->x != 1 && solution->x != -1) ? \
+		ft_vect_rot(*solution, angles.x, 3) : \
+		ft_vect_rot(*solution, angles.x, 1);
 }

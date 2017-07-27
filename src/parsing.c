@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/30 13:06:40 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/07/24 16:26:44 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/07/26 13:43:44 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void	ft_parse(t_env *env, char *av)
 		env->parse.tablen = ft_tablen(env->parse.split);
 		ft_check_types(env);
 		(env->parse.type == CAM && ft_strequ(env->parse.split[0], "camera") \
-		 == 0) ? ft_fill_cam(env) : "";
+		== 0) ? ft_fill_cam(env) : "";
 		(env->parse.type == OBJ && ft_strequ(env->parse.split[0], "objects") \
-		 == 0) ? ft_check_objects(env) : "";
+		== 0) ? ft_check_objects(env) : "";
 		(env->parse.type == LIGHT && ft_strequ(env->parse.split[0], "light") \
-		 == 0) ? ft_check_lights(env) : "";
+		== 0) ? ft_check_lights(env) : "";
 		ft_tabdel(&env->parse.split);
 		ft_strdel(&env->parse.line);
 	}

@@ -12,7 +12,7 @@
 
 #include <rt.h>
 
-void	ft_init_sdl(t_env *env)
+void		ft_init_sdl(t_env *env)
 {
 	if ((SDL_Init(SDL_INIT_VIDEO) || TTF_Init()) != 0)
 		ft_error_sdl();
@@ -23,7 +23,11 @@ void	ft_init_sdl(t_env *env)
 	if ((env->sdl.rend = SDL_CreateRenderer(env->sdl.win, -1, 0)) == NULL)
 		ft_error_sdl();
 	env->sdl.format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
-	if ((env->sdl.font = TTF_OpenFont("fonts/bodoni.ttf", 50)) == NULL)
+	if ((env->sdl.font[0] = TTF_OpenFont("fonts/bodoni.ttf", 50)) == NULL)
+		ft_error_sdl();
+	if ((env->sdl.font[1] = TTF_OpenFont("fonts/bodoni.ttf", 30)) == NULL)
+		ft_error_sdl();
+	if ((env->sdl.font[2] = TTF_OpenFont("fonts/bodoni.ttf", 25)) == NULL)
 		ft_error_sdl();
 	env->sdl.keep = 1;
 }

@@ -1,6 +1,6 @@
 <camera>
 	<position x = "0" y = "0" z = "0" />
-	<direction x = "0" y = "1" z = "0" />
+	<angles x = "0" y = "1" z = "0" />
 </camera>
 
 <objects>
@@ -34,6 +34,6 @@
 
 <light>
 	<basic>
-		<position x = "150" y = "451" z = "200" />
+		<position x = "150" y = "200" z = "50" />
 	</basic>
 </light>

@@ -61,7 +61,7 @@ void	ft_ev_eff_return1(t_env *env)
 		env->set.obj[3]->refle = (env->set.obj[3]->refle <= 0) ? 0 : \
 			env->set.obj[3]->refle;
 	}
-	ft_ev_eff_return2(env);	
+	ft_ev_eff_return2(env);
 }
 
 void	ft_ev_eff_return2(t_env *env)

@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 11:00:36 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/07/25 21:44:39 by marnaud          ###   ########.fr       */
+/*   Updated: 2017/07/27 18:30:29 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,8 @@ enum {TIMG, TINTER, TTEXT};
 enum {SIMG, STEXT};
 enum {DTEXT, DINTER};
 enum {MIN, MAX};
-enum {INTERFACE, OBJECTS, ATTRIBUTES, POSTAB, DIRTAB, COLTAB, BASETAB, EFFTAB, \
-	TEXTAB};
-
-typedef struct		s_vecti
-{
-	int				x;
-	int				y;
-	int				z;
-}					t_vecti;
+enum {CHECKER = 1, MOON = 2, SUN = 3, EARTH = 4, GARDEN = 4};
+enum {INTERFACE, OBJECTS, ATTRIBUTES, POSTAB, DIRTAB, COLTAB, BASETAB, EFFTAB};
 
 typedef struct		s_vect
 {
@@ -81,7 +74,9 @@ typedef struct		s_color
 typedef struct		s_cam
 {
 	t_vect			pos;
+	int				inc;
 	t_vect			dir;
+	t_vect			angles;
 	t_vect			pixel;
 	t_vect			view_plane;
 	t_vect			up;
@@ -99,10 +94,10 @@ typedef struct		s_obj
 	t_color			color;
 	int				angle;
 	t_vect			dir;
-	t_color			tile;
 	int				tex;
 	int				refle;
 	int				refra;
+	int				refra_trans;
 	int				fin[2];
 	int				finished;
 }					t_obj;
@@ -123,44 +118,46 @@ typedef struct		s_set
 	SDL_Color		color[2];
 }					t_set;
 
+typedef struct		s_light
+{
+	struct s_light	*next;
+	struct s_light	*prev;
+	int				type;
+	t_vect          pos;
+	t_vect          solution_point;
+	t_vect          normal_vect;
+	t_vect          light_vect;
+	double          norme;
+	double          power;
+	t_vect          dir;
+	t_color			color;
+}					t_light;
+
 typedef struct		s_tmp
 {
 	t_vect			pos;
 	t_vect			angles;
+	t_vect			ray_pos;
+	t_vect			ray_dir;
 	int				radius;
 	int				type;
 	int				id_o;
+	t_light			*light;
+	t_vect			solution_point;
 	t_color			color;
 	int				angle;
 	double			solution;
 	t_obj			*current;
 	int				i;
 	double			darkness;
-    double          power;
-	t_color			tile;
+	double          power;
 	int				tex;
 	int				refle;
 	int				refra;
-	int				nb_refle;
-	int				refle_lvl;
+	int				refra_trans;
 	int				fin[2];
 	int				finished;
 }					t_tmp;
-
-typedef struct		s_light
-{
-    struct s_light	*next;
-    struct s_light	*prev;
-	int				type;
-    t_vect          pos;
-	t_vect          solution_point;
-	t_vect          normal_vect;
-	t_vect          light_vect;
-	double          norme;
-    double          power;
-	t_vect          dir;
-	t_color			color;
-}					t_light;
 
 typedef struct		s_check
 {
@@ -189,7 +186,7 @@ typedef struct		s_sdl
 {
 	SDL_Window		*win;
 	SDL_Renderer	*rend;
-	TTF_Font		*font;
+	TTF_Font		*font[3];
 	SDL_PixelFormat	*format;
 	SDL_Texture		*draw;
 	SDL_Texture		*tset[3];
@@ -206,19 +203,27 @@ typedef struct		s_sdl
 
 typedef struct		s_thread
 {
-	SDL_Thread		*t_1;
-	SDL_Thread		*t_2;
-	SDL_Thread		*t_3;
-	SDL_Thread		*t_4;
+	SDL_Thread		*t[4];
 	int				id;
+	int				y_start;
+	int				y_end;
+	int				x_start;
+	int				x_end;
 	int				finished;
 }					t_thread;
 
+typedef struct      s_shadow
+{
+	int             i;
+	t_vect          test;
+	t_vect          solution;
+}                   t_shadow;
+
 typedef struct	s_env
 {
-	SDL_Surface		*texture[3];
 	t_parse			parse;
 	t_sdl			sdl;
+	t_shadow		shadow;
 	t_obj			*obj;
 	t_obj			*tmp_obj;
 	t_light			*light;
@@ -259,7 +264,8 @@ double				ft_scalar(t_vect vec1, t_vect vec2);
 t_vect				ft_vect_op(t_vect vec1, char c, t_vect vec2);
 t_vect				ft_vect_op2(double tmp, char c, t_vect vec);
 void				ft_thread(t_env *env);
-void				ft_browse_list(t_env *env, t_vect ray_dir, t_vect ray_pos);
+void				ft_browse_list(t_env *env, t_vect ray_dir, t_vect ray_pos, \
+		int i);
 void				ft_init_start(t_env *env);
 void				ft_display(t_env *env);
 void				ft_init_pixel(t_env *env);
@@ -283,20 +289,12 @@ SDL_Texture			*ft_img_to_tex(t_env *env, char *path);
 void				ft_init_set(t_env *env);
 void				ft_settings(t_env *env);
 void				ft_interface(t_env *env);
-void				ft_text_interface(t_env *env, int text);
-void				ft_text_cases_interface(t_env *env, int text);
 void				ft_event(t_env *env);
 void				ft_check_obj_types2(t_env *env);
 void				ft_s_objects(t_env *env);
-void				ft_text_objects(t_env *env);
-void				ft_text_objects2(t_env *env);
-void				ft_copy_text_obj(t_env *env);
 void				ft_ev_inter(t_env *env);
 void				ft_ev_obj(t_env *env);
 void				ft_attributes(t_env *env);
-void				ft_at_text1(t_env *env);
-void				ft_at_text2(t_env *env);
-void				ft_copy_text_at(t_env *env, int i);
 void				ft_ev_at(t_env *env);
 void				ft_add_elem_obj(t_env *env);
 void				ft_delete_elem_obj(t_env *env);
@@ -304,20 +302,11 @@ void				ft_init_draw(t_env *env);
 void				ft_stock_elem(t_env *env);
 void				ft_undelete(t_env *env);
 void				ft_pos_tab(t_env *env);
-void				ft_pos_text(t_env *env);
-void				ft_pos_text2(t_env *env, int i, char **name);
-void				ft_copy_pos_text(t_env *env, int i);
 void				ft_ev_pos(t_env *env);
 void				ft_ev_dir(t_env *env);
 void				ft_dir_tab(t_env *env);
-void				ft_dir_text(t_env *env);
-void				ft_dir_text2(t_env *env, int i, char **name);
-void				ft_copy_dir_text(t_env *env, int i);
 void				ft_ev_col(t_env *env);
 void				ft_col_tab(t_env *env);
-void				ft_col_text(t_env *env);
-void				ft_col_text2(t_env *env, int i, char **name);
-void				ft_copy_col_text(t_env *env, int i);
 void				ft_ev_col_rl(t_env *env);
 void				ft_ev_col_dub(t_env *env);
 void				ft_ev_col_return1(t_env *env);
@@ -337,15 +326,8 @@ void				ft_ev_obj_l(t_env *env);
 void				ft_ev_obj_u(t_env *env);
 void				ft_ev_at_dubrl(t_env *env);
 void				ft_ev_at_return1(t_env *env);
-void				ft_ev_at_return2(t_env *env);
-void				ft_ev_at_return3(t_env *env);
-void				ft_ev_at_return4(t_env *env);
 void				ft_parse_finished(t_env *env, int i);
 void				ft_base_tab(t_env *env);
-void				ft_base_text(t_env *env);
-void				ft_base_text2(t_env *env, char **name, int i, int max);
-void				ft_copy_base_text(t_env *env, int i, int max);
-void				ft_copy_base_text2(t_env *env, int i, int max);
 void				ft_ev_base(t_env *env);
 void				ft_ev_base_rlb(t_env *env);
 void				ft_ev_base_down(t_env *env, int *test);
@@ -354,9 +336,6 @@ void				ft_ev_base_return1(t_env *env);
 void				ft_ev_base_return2(t_env *env);
 void				ft_ev_base_return3(t_env *env);
 void				ft_eff_tab(t_env *env);
-void				ft_eff_text(t_env *env);
-void				ft_eff_text2(t_env *env, int i, char **name);
-void				ft_copy_eff_text(t_env *env, int i);
 void				ft_ev_eff(t_env *env);
 void				ft_ev_eff_rlb(t_env *env);
 void				ft_ev_eff_du(t_env *env);
@@ -372,10 +351,28 @@ void				ft_ev_tex_rlb(t_env *env);
 void				ft_ev_tex_du(t_env *env);
 t_env				*dup_struct(t_env *src, int id);
 t_vect				ft_normalize(t_vect vect);
+t_env				*dup_struct(t_env *src, int id);
+t_obj				*dup_obj(t_obj *src, t_env *env);
+t_light				*dup_light(t_light *src);
+t_tmp				dup_tmp(t_tmp src);
+t_vect				dup_vect(t_vect src);
+t_color				dup_color(t_color src);
+void				thread_suppr_dup(t_env *env);
+void				ft_parse_tex(t_env *env);
+void				ft_event_cam_rlf(t_env *env);
+void				ft_free(t_env *env);
+void				ft_free_obj(t_obj *obj);
+void				ft_free_light(t_light *light);
+void				ft_parse_refraction(t_env *env, int i);
+void                ft_replace(t_vect *solution, t_vect pos_obj, t_vect angles);
+void                ft_redirect(t_vect *solution, t_vect angles);
+void                ft_direct(t_vect *solution, t_vect angles);
+void                ft_place(t_env *env);
+void                ft_light_vect(t_env *env, int mode);
+void                ft_calc(t_env *env, t_vect test);
+void                ft_loop(t_env *env);
+void				ft_reflexion(t_env *env);
 void				ft_refraction(t_env *env);
-void				ft_reflection(t_env *env);
 void				ft_texture(t_env *env);
-void				ft_option_visu(t_env *env);
-void				ft_init_texture(t_env *env);
 
 #endif
