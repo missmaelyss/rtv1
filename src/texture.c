@@ -40,16 +40,11 @@ Uint32	obtenir_pixel(SDL_Surface *surface, int x, int y)
 
 void	first_point(t_env *env, int *s, int *t)
 {
-	t_vect	point;
-//	SDL_Surface *try;
+	t_vect      point;
+    SDL_Surface *texture;
 
-	(void)s;
-	(void)t;
-/*	try = NULL;
-	try = SDL_LoadBMP("img/moon.bmp");
-	if (try != NULL)
-		SDL_FreeSurface(try);
-*/	point.x = env->tmp.ray_pos.x - env->tmp.current->pos.x;
+    texture = env->texture[0];
+	point.x = env->tmp.ray_pos.x - env->tmp.current->pos.x;
 	point.y = env->tmp.ray_pos.y - env->tmp.current->pos.y;
 	point.z = env->tmp.ray_pos.z - env->tmp.current->pos.z;
 	point = (point.x != 1 && point.x != -1) ? \
@@ -57,8 +52,7 @@ void	first_point(t_env *env, int *s, int *t)
 			ft_vect_rot(point, -env->obj->angles.x, 1);
 	point = ft_vect_rot(point, -env->tmp.current->angles.y, 2);
 	point = ft_vect_rot(point, -env->tmp.current->angles.z, 1);
-//		printf("%d %d\n", texture->h, texture->w);
-	/*	if (env->tmp.current->type == 2)
+		if (env->tmp.current->type == 2)
 	{
 		if (point.x < 0)
 			point.x += texture->w * ceil(-point.x / texture->w);
@@ -102,21 +96,21 @@ if (*t > texture->h || *t < -texture->h)
 			*t = (*t < 0) ? -texture->h : texture->h;
 		if (*s > texture->w || *s < -texture->w)
 			*s = (*s < 0) ? -texture->w : texture->w;
-	*/
 }
 
-void	ft_texture(t_env *env)
+t_color	ft_texture(t_env *env)
 {
 	int		s;
-	int		t;
-//	SDL_Color color;
+    int		t;
+    Uint8   tmp[3];
+	t_color color;
 
 	env->tmp.ray_pos = env->light->solution_point;
 	first_point(env, &s, &t);
-//	SDL_GetRGB(obtenir_pixel(env->texture[1], s, t) ,\
-//		env->texture[1]->format, &color.r, &color.g, &color.b);
-//	env->tmp.color.red = (int)color.r;
-//	env->tmp.color.green = (int)color.g;
-//	env->tmp.color.blue = (int)color.b;
-	ft_chose_color(env);
+    SDL_GetRGB(obtenir_pixel(env->texture[0], s, t) ,\
+               env->texture[0]->format, &tmp[0], &tmp[1], &tmp[2]);
+    color.red = (int)tmp[0];
+    color.green = (int)tmp[1];
+    color.blue = (int)tmp[2];
+    return (color);
 }

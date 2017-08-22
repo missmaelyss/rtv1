@@ -29,8 +29,22 @@ void	suppr_dup_set(t_set src)
 	}
 }
 
+static void    suppr_texture(SDL_Surface *texture)
+{
+    
+    if (texture != NULL)
+    {
+        free(texture);
+        texture = NULL;
+    }
+}
+
 void	thread_suppr_dup(t_env *env)
 {
+    suppr_texture(env->texture[0]);
+    suppr_texture(env->texture[1]);
+    suppr_texture(env->texture[2]);
+    suppr_texture(env->texture[3]);
 	ft_free_obj(env->obj);
 	ft_free_light(env->light);
 	if (env)

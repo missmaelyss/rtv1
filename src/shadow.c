@@ -6,7 +6,7 @@
 /*   By: mawasche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/16 14:31:31 by mawasche          #+#    #+#             */
-/*   Updated: 2017/07/26 12:40:44 by mawasche         ###   ########.fr       */
+/*   Updated: 2017/08/18 15:36:15 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	ft_loop(t_env *env)
 				pow(env->shadow.solution.y, 2) + pow(env->shadow.solution.z, \
 				2));
 			if (env->shadow.solution.h < env->light->norme)
-				env->tmp.darkness = 0.3;
+                env->tmp.darkness = (env->obj->refra_trans == 0) ? 0.3\
+                : (400 + env->obj->refra_trans * 1.0) / 1000;
 			break ;
 		}
 		env->shadow.i++;

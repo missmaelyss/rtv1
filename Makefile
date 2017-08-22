@@ -6,7 +6,7 @@
 #    By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 12:54:42 by ele-cren          #+#    #+#              #
-#    Updated: 2017/07/26 20:32:37 by marnaud          ###   ########.fr        #
+#    Updated: 2017/08/21 17:01:55 by marnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRC = src/check_types.c src/init.c src/main.c src/parse_lights.c \
 OBJ = $(patsubst src/%.c, obj/%.o, $(SRC))
 
 FLAGS = -Wall -Wextra -Werror -I ./SDL2/SDL2/include  \
-		-I $(HOME)/SDL2/TTF/include/SDL2 -I ./libft/include -I ./include -g
+		-I $(HOME)/SDL2/TTF/include/SDL2 -I ./libft/include -I ./include -g\
+		-Ofast
 
 LIBS = -L./libft -lft -L $(HOME)/SDL2/TTF/lib -lSDL2_ttf -L \
 	   $(HOME)/SDL2/SDL2/lib -lSDL2 -lSDL2main

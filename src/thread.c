@@ -6,7 +6,7 @@
 /*   By: gauffret <gauffret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 11:47:38 by gauffret          #+#    #+#             */
-/*   Updated: 2017/07/27 18:31:43 by marnaud          ###   ########.fr       */
+/*   Updated: 2017/08/18 14:59:01 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ int			thread(void *envt)
 			{
 				env->tmp.ray_pos = env->cam.pos;
 				env->tmp.ray_dir = env->cam.pixel;
-				env->tmp.color = ft_chose_color(env);
-				if (env->tmp.current->type == SPHERE)
-				//		ft_refraction(env);	
-						ft_reflexion(env);
+				ft_option_visu(env);
 				env->sdl.pixels[env->sdl.pos.x + (env->sdl.pos.y * WIDTHR)] =\
 				SDL_MapRGBA(env->sdl.format, env->tmp.color.red, env->tmp.color.green, env->tmp.color.blue, 255);
 			}
@@ -102,7 +99,7 @@ void	ft_browse_pixels(t_env *env)
 	SDL_WaitThread(env->thread.t[1], &e[1]->thread.finished);
 	SDL_WaitThread(env->thread.t[2], &e[2]->thread.finished);
 	SDL_WaitThread(env->thread.t[3], &e[3]->thread.finished);
-	i = -1;
+    i = -1;
 	while (++i < 4)
 		thread_suppr_dup(e[i]);
 	SDL_UnlockTexture(env->sdl.draw);

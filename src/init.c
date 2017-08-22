@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 14:25:36 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/07/27 18:14:05 by marnaud          ###   ########.fr       */
+/*   Updated: 2017/08/18 13:52:59 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_init_tmp(t_env *env)
 	env->tmp.tex = 0;
 	env->tmp.angle = 0;
 	env->tmp.refle = 0;
-	env->tmp.refra = 0;
+	env->tmp.refra = 1;
 	env->tmp.refra_trans = 0;
 	env->tmp.fin[0] = 0;
 	env->tmp.fin[1] = 0;

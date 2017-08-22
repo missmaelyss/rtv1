@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 11:00:36 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/07/27 18:30:29 by marnaud          ###   ########.fr       */
+/*   Updated: 2017/08/21 12:57:21 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,8 @@ typedef struct		s_tmp
 	int				refra_trans;
 	int				fin[2];
 	int				finished;
+	int				nb_refle;
+	t_color			tab_color[5];
 }					t_tmp;
 
 typedef struct		s_check
@@ -234,6 +236,7 @@ typedef struct	s_env
 	t_calc			calc;
 	t_thread		thread;
 	t_set			set;
+    SDL_Surface     *texture[4];
 }					t_env;
 
 void				ft_parse(t_env *env, char *av);
@@ -373,6 +376,7 @@ void                ft_calc(t_env *env, t_vect test);
 void                ft_loop(t_env *env);
 void				ft_reflexion(t_env *env);
 void				ft_refraction(t_env *env);
-void				ft_texture(t_env *env);
+t_color				ft_texture(t_env *env);
+void				ft_option_visu(t_env *env);
 
 #endif

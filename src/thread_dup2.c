@@ -6,7 +6,7 @@
 /*   By: gauffret <gauffret@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 13:18:48 by gauffret          #+#    #+#             */
-/*   Updated: 2017/07/25 18:10:26 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/08/18 13:59:08 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static t_obj	*dup_obj2(t_obj *src, t_obj *new, t_obj *link_src, \
 							t_obj *link_dest)
 {
+	(void)src;
 	if (!(new = (t_obj *)malloc(sizeof(t_obj))))
 		ft_error();
 	if (link_dest)
@@ -30,8 +31,9 @@ static t_obj	*dup_obj2(t_obj *src, t_obj *new, t_obj *link_src, \
 	new->angle = link_src->angle;
 	new->dir = dup_vect(link_src->dir);
 	new->tex = link_src->tex;
-	new->refra = src->refra;
-	new->refle = src->refle;
+	new->refra = link_src->refra;
+	new->refra_trans = link_src->refra_trans;
+	new->refle = link_src->refle;
 	new->fin[0] = link_src->fin[0];
 	new->fin[1] = link_src->fin[1];
 	new->finished = link_src->finished;

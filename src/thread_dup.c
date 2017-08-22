@@ -77,5 +77,13 @@ t_env	*dup_struct(t_env *src, int id)
 	dest->obj = dup_obj(src->obj, src);
 	dest->light = NULL;
 	dest->light = dup_light(src->light);
+    dest->texture[0] = NULL;
+     dest->texture[1] = NULL;
+     dest->texture[2] = NULL;
+     dest->texture[3] = NULL;
+   /* dest->texture[0] = SDL_LoadBMP("img/moon.bmp");
+    dest->texture[1] = SDL_LoadBMP("img/soleil.bmp");
+    dest->texture[2] = SDL_LoadBMP("img/moon.bmp");
+    dest->texture[3] = SDL_LoadBMP("img/moon.bmp");*/
 	return (dest);
 }

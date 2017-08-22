@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 11:13:20 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/07/26 14:44:29 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/08/18 14:09:55 by marnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void		ft_parse_refraction(t_env *env, int i)
 		if (ft_strequ(env->parse.split[i], "trans") && (i + 2) <= \
 				env->parse.tablen)
 		{
-			env->tmp.refra = ft_atoi(env->parse.split[i + 2]);
+			env->tmp.refra_trans = ft_atoi(env->parse.split[i + 2]);
 			(env->tmp.refra_trans < 0 || env->tmp.refra_trans > 100) ? \
 				ft_error() : "";
 		}
